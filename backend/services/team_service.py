@@ -3,8 +3,8 @@ from repositories.team_repository import TeamRepository
 
 
 class TeamService:
-    def __init__(self):
-        self.repository = TeamRepository()
+    def __init__(self, repository: TeamRepository):
+        self.repository = repository
 
     def add_team(self, team: Team) -> None:
         self.repository.add(team)

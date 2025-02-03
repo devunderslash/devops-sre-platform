@@ -1,12 +1,13 @@
 from unittest import TestCase
 
 from entities.team import Team
+from repositories.team_repository import TeamRepository
 from services.team_service import TeamService
 
 
 class TestTeamservice(TestCase):
     def setUp(self):
-        self.service = TeamService()
+        self.service = TeamService(TeamRepository())
 
     def test_add_team(self):
         self.service.add_team(Team(1, 'team A', 'coach A', 'manager A', 'league A'))

@@ -12,7 +12,7 @@ TODO - Add system diagram
 ## Installation
 
 1. Clone the repository
-2. Create a virtual environment in the backedn directory:
+2. Create a virtual environment in the backend directory:
 ```bash
 cd backend
 python -m venv venv

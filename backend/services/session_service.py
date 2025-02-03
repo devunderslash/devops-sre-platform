@@ -6,8 +6,8 @@ from repositories.session_repository import SessionRepository
 
 
 class SessionService:
-    def __init__(self):
-        self.repository = SessionRepository()
+    def __init__(self, repository: SessionRepository):
+        self.repository = repository
 
     def create_session(self, session: Session) -> None:
         self.repository.add(session)

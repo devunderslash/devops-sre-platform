@@ -1,12 +1,13 @@
 from unittest import TestCase
 
 from entities.attendance import Attendance
+from repositories.attendance_repository import AttendanceRepository
 from services.attendance_service import AttendanceService
 
 
 class TestAttendanceService(TestCase):
     def setUp(self):
-        self.service = AttendanceService()
+        self.service = AttendanceService(AttendanceRepository())
 
     def test_add_attendance(self):
         self.service.add_attendance(Attendance(1, 1, 1, 'present'))

@@ -2,8 +2,8 @@ from entities.attendance import Attendance
 from repositories.attendance_repository import AttendanceRepository
 
 class AttendanceService:
-    def __init__(self):
-        self.repository = AttendanceRepository()
+    def __init__(self, repository: AttendanceRepository):
+        self.repository = repository
 
     def add_attendance(self, attendance: Attendance) -> None:
         self.repository.add(attendance)

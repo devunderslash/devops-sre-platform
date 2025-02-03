@@ -13,7 +13,7 @@ player_bp = Blueprint('player', __name__)
 player_repository = PlayerRepository()
 attendance_repository = AttendanceRepository()
 player_service = PlayerService(player_repository)
-attendance_service = AttendanceService()
+attendance_service = AttendanceService(attendance_repository)
 
 
 @player_bp.route('/players', methods=['POST'])
@@ -46,6 +46,13 @@ def list_all_players():
 def get_player(id):
     player = player_service.get_player(id)
     if player:
+        return jsonify(player.__dict__), 200
+    return jsonify({"error": "Player not found"}), 404
+
+@player_bp.route('/players/<string:name>', methods=['GET'])
+def get_player_by_name(name):
+    player = player_service.get_player_by_name(name)
+    if player:
         return jsonify(player.__dict__)
     return jsonify({"error": "Player not found"}), 404
 
@@ -68,12 +75,4 @@ def delete_player(id):
     player_service.delete_player(id)
     attendance_service.delete_attendance_by_player_id(id)
 
-    return jsonify({"message": "Player deleted"}), 200
-
-
-@player_bp.route('/players/<string:name>', methods=['GET'])
-def get_player_by_name(name):
-    player = player_service.get_player_by_name(name)
-    if player:
-        return jsonify(player.__dict__)
-    return jsonify({"error": "Player not found"}), 404
+    return jsonify({"message": "Player deleted"}), 204

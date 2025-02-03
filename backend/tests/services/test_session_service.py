@@ -3,12 +3,13 @@ from datetime import datetime
 
 from entities.session import Session
 from entities.attendance import Attendance
+from repositories.session_repository import SessionRepository
 from services.session_service import SessionService
 
 
 class TestSessionService(TestCase):
     def setUp(self):
-        self.service = SessionService()
+        self.service = SessionService(SessionRepository())
 
     def test_create_session(self):
         self.service.create_session(Session(1, datetime(2020, 9, 22, 18, 30, 00), 'location A', 'training', ['team A', 'team B']))
