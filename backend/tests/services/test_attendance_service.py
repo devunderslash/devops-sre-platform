@@ -62,6 +62,18 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance(1).status, 'late')
         self.assertEqual(self.service.get_attendance(2).status, 'present')
 
+    def test_update_attendance_by_session_id(self):
+        attendance1 = Attendance(1, 1, 1, 'present')
+        attendance2 = Attendance(2, 1, 2, 'absent')
+        attendance3 = Attendance(3, 2, 1, 'late')
+        self.service.add_attendance(attendance1)
+        self.service.add_attendance(attendance2)
+        self.service.add_attendance(attendance3)
+        self.service.update_attendance_by_session_id(1, 'late')
+
+        self.assertEqual(self.service.get_attendance(1).status, 'late')
+        self.assertEqual(self.service.get_attendance(2).status, 'late')
+
 
     def test_delete_attendance(self):
         attendance1 = Attendance(1, 1, 1, 'present')
@@ -87,6 +99,18 @@ class TestAttendanceService(TestCase):
 
         self.assertEqual(len(self.service.list_all_attendances()), 2)
         self.assertEqual(self.service.get_attendance(2), attendance2)
+
+    def test_delete_attendance_by_session(self):
+        attendance1 = Attendance(1, 1, 1, 'present')
+        attendance2 = Attendance(2, 1, 2, 'absent')
+        attendance3 = Attendance(3, 2, 1, 'late')
+        self.service.add_attendance(attendance1)
+        self.service.add_attendance(attendance2)
+        self.service.add_attendance(attendance3)
+        self.service.delete_attendance_by_session(1)
+
+        self.assertEqual(len(self.service.list_all_attendances()), 1)
+        self.assertEqual(self.service.get_attendance(3), attendance3)
 
     def test_list_all_attendances(self):
         self.service.add_attendance(Attendance(1, 1, 1, 'present'))

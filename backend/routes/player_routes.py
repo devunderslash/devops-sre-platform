@@ -28,10 +28,10 @@ def add_player():
         id=validated_data['id'],
         name=validated_data['name'],
         dob=validated_data['dob'],
-        age=validated_data['age'],
         joined_group_date=validated_data['joined_group_date'],
 
     )
+
     player_service.add_player(player)
     return jsonify({"message": "Player added"}), 201
 

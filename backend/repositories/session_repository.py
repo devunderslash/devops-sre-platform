@@ -36,6 +36,4 @@ class SessionRepository(Repository):
     def add_attendance(self, session_id: int, attendance_records: List[Attendance]) -> None:
         session = self.get(session_id)
         if session:
-            if not hasattr(session, 'attendance_records'):
-                session.attendance_records = []
             session.attendance_records.extend(attendance_records)

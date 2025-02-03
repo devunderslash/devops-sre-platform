@@ -25,6 +25,10 @@ class TestTeamRepository(TestCase):
         self.assertEqual(self.repository.get_by_name('Team 1'), team1)
         self.assertEqual(self.repository.get_by_name('Team 2'), team2)
 
+    def test_get_team_by_name_not_found(self):
+        self.assertIsNone(self.repository.get_by_name('Team 1'))
+        
+
     def test_update_team(self):
         team = Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3'])
         self.repository.add(team)
