@@ -9,12 +9,6 @@ class TeamRepository(Repository):
 
     def get(self, id: int) -> Optional[Team]:
         return self.teams.get(id)
-    
-    def get_by_name(self, name: str) -> Optional[Team]:
-        for team in self.teams.values():
-            if team.name == name:
-                return team
-        return None
 
     def add(self, team: Team) -> None:
         self.teams[team.id] = team
@@ -28,3 +22,10 @@ class TeamRepository(Repository):
 
     def list_all(self) -> List[Team]:
         return list(self.teams.values())
+    
+    # ** Additional methods **
+    def get_by_name(self, name: str) -> Optional[Team]:
+        for team in self.teams.values():
+            if team.name == name:
+                return team
+        return None

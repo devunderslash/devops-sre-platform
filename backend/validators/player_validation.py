@@ -18,9 +18,6 @@ class PlayerValidation:
             errors.append("Invalid date format for joined_group_date. Expected format: yyyy-mm-dd")
 
         # Add more validations as needed
-        if not isinstance(data['id'], int):
-            errors.append("Invalid type for id. Expected int")
-
         if not isinstance(data['name'], str):
             errors.append("Invalid type for name. Expected str")
 

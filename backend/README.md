@@ -25,12 +25,19 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-5. Run the application:
+5. Create DB tables:
+```bash
+flask db init
+flask db migrate
+flask db upgrade
+```
+
+6. Run the application:
 ```bash
 flask run
 ```
-6. The application should be running on http://127.0.0.1:5000/
-7. Stop the application by pressing `Ctrl+C` and deactivate the virtual environment by running:
+7. The application should be running on http://127.0.0.1:5000/
+8. Stop the application by pressing `Ctrl+C` and deactivate the virtual environment by running:
 ```bash
 deactivate
 ```
@@ -88,3 +95,5 @@ Sample curl request:
 ```bash
 curl -X GET http://127.0.0.1:5000/api/players/1
 ```
+
+### PUT /api/players/<int:player_id>

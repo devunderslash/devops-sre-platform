@@ -8,12 +8,6 @@ class PlayerRepository(Repository):
 
     def get(self, id: int) -> Optional[Player]:
         return self.players.get(id)
-    
-    def get_by_name(self, name: str) -> Optional[Player]:
-        for player in self.players.values():
-            if player.name == name:
-                return player
-        return None
 
     def add(self, player: Player) -> None:
         self.players[player.id] = player
@@ -27,3 +21,11 @@ class PlayerRepository(Repository):
 
     def list_all(self) -> List[Player]:
         return list(self.players.values())
+    
+    # ** Additional methods **
+    
+    def get_by_name(self, name: str) -> Optional[Player]:
+        for player in self.players.values():
+            if player.name == name:
+                return player
+        return None

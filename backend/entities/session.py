@@ -7,7 +7,7 @@ from entities.attendance import Attendance
 
 @dataclass
 class Session:
-    id: int
+    id: int = field(init=False)
     datetime: datetime
     location: str
     session_type: str # training, match, etc

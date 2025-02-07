@@ -10,12 +10,6 @@ class SessionRepository(Repository):
 
     def get(self, id: int) -> Session:
         return self.sessions.get(id)
-    
-    def get_by_date(self, datetime: datetime) -> Session:
-        for session in self.sessions.values():
-            if session.datetime == datetime:
-                return session
-        return None
 
     def add(self, session: Session) -> None:
         self.sessions[session.id] = session
@@ -29,6 +23,14 @@ class SessionRepository(Repository):
 
     def list_all(self) -> list[Session]:
         return list(self.sessions.values())
+    
+  # ** Additional methods **
+    
+    def get_by_date(self, datetime: datetime) -> Session:
+        for session in self.sessions.values():
+            if session.datetime == datetime:
+                return session
+        return None
     
     def list_all_by_team(self, team: str) -> list[Session]:
         return [session for session in self.sessions.values() if team in session.teams]
