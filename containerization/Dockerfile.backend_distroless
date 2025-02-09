@@ -1,0 +1,52 @@
+# Multi stage distroless build with image size of 50MB
+
+# Stage 1: Build environment
+FROM python:3.11.2-slim AS builder
+
+# Set working directory
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Copy requirements file
+COPY ../backend/requirements.txt .
+
+# Install dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code
+COPY ../backend .
+# Copy the Entrypoint script
+COPY containerization/docker-entrypoint.sh .
+
+RUN chmod +x /app/docker-entrypoint.sh
+
+
+# Stage 2: Create minimal image
+FROM gcr.io/distroless/python3-debian12
+
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files from the builder stage, including flask and gunicorn system lib deps
+COPY --from=builder /app .
+COPY --from=builder /usr/local/lib/libpython3.11.so.1.0 /usr/lib/libpython3.11.so.1.0
+COPY --from=builder /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
+COPY --from=builder /usr/local/lib/python3.11/lib-dynload/ /usr/local/lib/python3.11/lib-dynload/
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /usr/lib/x86_64-linux-gnu/libssl.so.1.1
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
+COPY --from=builder /usr/lib/x86_64-linux-gnu/libffi.so.7 /usr/lib/x86_64-linux-gnu/libffi.so.7
+COPY --from=builder /usr/local/bin/python /usr/local/bin/python
+COPY --from=builder /usr/local/bin/flask /usr/local/bin/flask
+COPY --from=builder /usr/local/bin/gunicorn /usr/local/bin/gunicorn
+COPY --from=busybox /bin/sh /bin/sh
+COPY --from=busybox /bin/rm /bin/rm
+COPY --from=busybox /bin/echo /bin/echo
+
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages
+
+# Set the entrypoint to the shell script
+ENTRYPOINT ["/bin/sh", "/app/docker-entrypoint.sh"]

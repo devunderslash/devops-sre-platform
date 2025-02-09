@@ -54,5 +54,5 @@ app.register_blueprint(session_bp, url_prefix='/api')
 app.register_blueprint(attendance_bp, url_prefix='/api')
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)

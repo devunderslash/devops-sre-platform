@@ -1,0 +1,17 @@
+# Basic Gunicorn image with image size around 327 MB
+FROM python:3.13-slim AS build
+
+WORKDIR /app
+
+COPY ../backend/requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY ../backend .
+
+ENV SQLALCHEMY_DATABASE_URI="sqlite:///db.sqlite3"
+ENV FLASK_APP="app.py"
+ENV FLASK_ENV="development"
+
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "wsgi:app"]
