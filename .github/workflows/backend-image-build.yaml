@@ -37,13 +37,13 @@ jobs:
 
     - name: Find latest backend tag
       id: find_tag
-      run: echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags='backend*' --max-count=1))"
+      run: echo "tag=$(git describe --tags $(git rev-list --tags='backend*' --max-count=1))" >> $GITHUB_ENV
 
 # push the backend image to Github Container Registry with the following tags: latest, commit hash and semver based off the git tag
     - name: Tag and Push the backend image
       run: |
 
-        TAG=${{ steps.find_tag.outputs.tag }}
+        TAG=${{ env.tag }}
         docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
         docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{TAG}}
 
