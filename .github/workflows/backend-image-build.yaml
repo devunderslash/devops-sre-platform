@@ -31,12 +31,22 @@ jobs:
         username: ${{github.actor}}
         password: ${{secrets.GITHUB_TOKEN}}
 
+# fetch the tags and find the latest backend tag
+    - name: Fetch tags
+      run: git fetch --tags
+
+    - name: Find latest backend tag
+      id: find_tag
+      run: echo "::set-output name=tag::$(git describe --tags $(git rev-list --tags='backend*' --max-count=1))"
+
 # push the backend image to Github Container Registry with the following tags: latest, commit hash and semver based off the git tag
     - name: Tag and Push the backend image
       run: |
+
+        TAG=${{ steps.find_tag.outputs.tag }}
         docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-        docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
-        
+        docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{TAG}}
+
         docker push ghcr.io/${{ github.repository }}/backend:latest
         docker push ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-        docker push ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
+        docker push ghcr.io/${{ github.repository }}/backend:${{TAG}}
