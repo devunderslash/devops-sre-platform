@@ -8,7 +8,7 @@ This is a sample project for a DevOps SRE and Platform Engineering practcies. Th
 
 - **github-actions**: This repository contains the CI/CD pipelines for the repository. Pipelines are defined in the `.github/workflows` directory. The pipelines will undertake multiple jobs such as building application images and running tests.
 
-- **kubernetes**: This directory contains a small K8s setup to run the application in a Kubernetes cluster. It will also run Vault and ArgoCD to show how secrets management and GitOps can be used in a project.
+- **kubernetes**: This directory contains a small K8s setup to run the application in a Kubernetes cluster. It will also run Vault, External Secrets Operator (ESO) and ArgoCD to show how secrets management and GitOps can be used in a project.
 
 - **infrastructure**: This directory contains the Terraform code to deploy the application to AWS. It will display the IaC practices to deploy the application to a simple 3 tier architecture on AWS, with a VPC, Subnets, Security Groups, and EC2 instances. This will be built out to also include an EKS deployment and also an example of a more simpler solution such as Lightsail.
 

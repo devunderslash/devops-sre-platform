@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: playground-postgres
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: playground-infra
+  source:
+    repoURL: https://github.com/devunderslash/devops-sre-platform/kubernetes/infra/playground-postgres.git
+    targetRevision: HEAD
+    path: playground-postgres
+    helm:
+      releaseName: playground-postgres
+      valuesObject:
+        global:
+          postgresql:
+            auth:
+              postgresPassword: "pgpass"
+              username: "pguser"
+              password: "pgpass"
+              database: "backend-db"
+        auth:
+          database: "backend-db"
+        primary:
+          initdb:
+            args: ""
+            postgresqlWalDir: ""
+            user: ""
+            password: ""
+          persistence:
+            enabled: true
+            existingClaim: ""
+            mountPath: /bitnami/postgresql
+            accessModes:
+              - ReadWriteOnce
+            size: 1Gi
+          persistentVolumeClaimRetentionPolicy:
+            enabled: true
+            whenScaled: Retain
+            whenDeleted: Delete
+
+        readReplicas:
+          persistence:
+            enabled: true
+            accessModes:
+              - ReadWriteOnce
+            size: 1Gi
+          persistentVolumeClaimRetentionPolicy:
+            enabled: true
+            whenScaled: Retain
+            whenDeleted: Delete
+
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

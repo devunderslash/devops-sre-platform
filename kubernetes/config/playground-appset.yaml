@@ -1,0 +1,7 @@
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: playground-appset
+#   namespace: argocd
+# spec:
