@@ -20,8 +20,10 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
 # build the backend image with the dockerfile located: containerization/Dockerfile.backend
-    - name: Build the backend image
+    - name: Build and tag backend image
       run: docker build -t ghcr.io/${{ github.repository }}/backend:latest -f containerization/Dockerfile.backend .
+           docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+           docker tag ghcr.io/${{ github.repository }}/backend:latest ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
 
 # login to Github Container Registry
     - name: 'Login to GitHub Container Registry'
@@ -36,4 +38,4 @@ jobs:
       run: |
         docker push ghcr.io/${{ github.repository }}/backend:latest
         docker push ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
-        docker push ghcr.io/${{ github.repository }}/backend:${{ github.ref }}
+        docker push ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
