@@ -37,7 +37,7 @@ jobs:
 
     - name: Find latest backend tag
       id: find_tag
-      run: echo "TAG=$(git describe --tags $(git rev-list --max-count=1))" >> $GITHUB_ENV
+      run: echo "TAG=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
 # push the backend image to Github Container Registry with the following tags: latest, commit hash and semver based off the git tag
     - name: Tag and Push the backend image
