@@ -1,7 +1,48 @@
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: ApplicationSet
-# metadata:
-#   name: playground-appset
-#   namespace: argocd
-# spec:
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  creationTimestamp: null
+  name: platform-dev
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      directories:
+      - path: apps/*/overlay/region1-dev
+      repoURL: https://github.com/devunderslash/devops-sre-platform/kubernetes/apps-deployment-repo
+      requeueAfterSeconds: 20
+      revision: "HEAD"
+  syncPolicy: {}
+  template:
+    metadata:
+      labels:
+        # app.kubernetes.io/managed-by: argocd-autopilot
+        app.kubernetes.io/name: 'platform-dev-{{index .path.segments 1}}'
+      name: 'platform-dev-{{index .path.segments 1}}'
+      namespace: playground-apps
+    spec:
+      destination:
+        namespace: 'playground-apps'
+      ignoreDifferences:
+      - group: argoproj.io
+        jsonPointers:
+        - /status
+        kind: Application
+      project: default
+      source:
+        path: '{{.path.path}}'
+        repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
+        targetRevision: 'HEAD'   
+        # plugin: 
+        #   name: kustomize-helm   
+      syncPolicy:
+        automated:
+          allowEmpty: false
+          prune: true
+          selfHeal: true
+status: {}

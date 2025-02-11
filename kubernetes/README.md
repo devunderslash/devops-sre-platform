@@ -19,6 +19,21 @@ A simple bash script has been to do the following:
 7. Installs helm charts for Vault and ESO
 8. Initialize and unseal Vault
 
+To run the script, run the following command:
+```bash
+./playground.sh up
+```
+
+To tear down the playground, run the following command:
+```bash
+./playground.sh down
+```
+
+Then run minikube stop to completely stop the minikube cluster.
+```bash
+minikube stop
+```
+
 ## Deploy Infrastructure and Apps
 To deploy the infrastructure and apps, run the following command:
 
@@ -53,4 +68,7 @@ http://argocd.playground.io
 # The default username is 'admin' and password is stored as a secret which can be retrieved using:
 kubectl -n argocd get secret argocd-initial-admin-secret  --template={{.data.password}} | base64 --decode
 ```
+
+- Add the application to ArgoCD
+```bash
 
