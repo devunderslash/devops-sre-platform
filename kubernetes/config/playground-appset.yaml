@@ -31,7 +31,8 @@ spec:
         path: '{{.path.path}}'
       destination:
         namespace: apps
-        server: https://kubernetes.default.svc # default cluster in minikube (displays as in-cluster)
+        # server: https://kubernetes.default.svc # default cluster in minikube (displays as in-cluster)
+        name: minikube
       syncPolicy:
         automated:
           allowEmpty: false
