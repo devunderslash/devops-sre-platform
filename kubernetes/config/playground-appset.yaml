@@ -13,8 +13,8 @@ spec:
   generators:
   - git:
       directories:
-      - path: apps/*/overlay/region1-dev
-      repoURL: https://github.com/devunderslash/devops-sre-platform/kubernetes/apps-deployment-repo
+      - path: kubernetes/apps-deployment-repo/apps/*/overlay/region1-dev
+      repoURL: https://github.com/devunderslash/devops-sre-platform.git
       requeueAfterSeconds: 20
       revision: "HEAD"
   syncPolicy: {}
@@ -24,10 +24,10 @@ spec:
         # app.kubernetes.io/managed-by: argocd-autopilot
         app.kubernetes.io/name: 'platform-dev-{{index .path.segments 1}}'
       name: 'platform-dev-{{index .path.segments 1}}'
-      namespace: playground-apps
+      namespace: apps
     spec:
       destination:
-        namespace: 'playground-apps'
+        namespace: 'apps'
       ignoreDifferences:
       - group: argoproj.io
         jsonPointers:
