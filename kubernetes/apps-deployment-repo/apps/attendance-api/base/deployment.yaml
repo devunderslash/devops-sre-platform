@@ -27,5 +27,5 @@ spec:
                 name: attendance-api-base-config
             - configMapRef:
                 name: attendance-api-overlays-config
-            - secretRef:
-                name: attendance-secret
+            # - secretRef:
+            #     name: attendance-secret

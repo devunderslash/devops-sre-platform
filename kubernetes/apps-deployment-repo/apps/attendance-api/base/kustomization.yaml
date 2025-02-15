@@ -13,6 +13,8 @@ resources:
 # - serviceaccount.yaml
 
 configMapGenerator:
-- literals:
+- name: attendance-api-base-config
+  behavior: create
+  literals:
   - INTERNAL_SECRET_KEY=secret
   - PLATFORM=k8s

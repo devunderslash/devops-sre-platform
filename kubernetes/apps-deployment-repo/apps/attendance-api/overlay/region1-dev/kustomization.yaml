@@ -21,7 +21,7 @@ transformers:
     - region1-dev-labels.yaml
 
 configMapGenerator:
-- name: backend-api-overlays-config
+- name: attendance-api-overlays-config
   literals:
   - AUTH_ENABLED=true
   - REGION=region1
