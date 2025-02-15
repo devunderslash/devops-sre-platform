@@ -27,3 +27,8 @@ configMapGenerator:
   - REGION=region1
   - ENV=dev
   - FLASK_ENV=development
+  - SQLALCHEMY_DATABASE_URI=sqlite:///db.sqlite3
+  - SECRET_KEY=your_secret_key 
+  - DATABASE_URL="sqlite:///your_database.db" 
+  - SQLALCHEMY_TRACK_MODIFICATIONS=False 
+  - SQLALCHEMY_ENGINE_OPTIONS=Something

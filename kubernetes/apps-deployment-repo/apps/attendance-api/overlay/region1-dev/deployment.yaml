@@ -19,11 +19,11 @@ spec:
               memory: "1Gi"
           env: 
           # Database
-            - name: SQLALCHEMY_DATABASE_URI
-              valueFrom:
-                secretKeyRef:
-                  name: SQLALCHEMY_DATABASE_URI
-                  key: SQLALCHEMY_DATABASE_URI
+            # - name: sqlalchemy_database_uri
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: SQLALCHEMY_DATABASE_URI
+            #       key: SQLALCHEMY_DATABASE_URI
             # - name: DB_PORT
             #   valueFrom:
             #     secretKeyRef:
