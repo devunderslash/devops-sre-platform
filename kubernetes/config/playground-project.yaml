@@ -1,27 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
+  name: platform-dev
+  namespace: argocd
+  creationTimestamp: null
   annotations:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
-  creationTimestamp: null
-  name: platform-dev
-  namespace: argocd
 spec:
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
   description: playground platform project
-  destinations:
-  - namespace: 'apps'
-    name: '*'
-  - namespace: '!argocd'
-    name: '*'
-  namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
   sourceRepos:
-  - 'https://github.com/devunderslash/devops-sre-platform.git'
-
-status: {}
+    - 'https://github.com/devunderslash/devops-sre-platform.git'
+  destinations:
+    - namespace: 'apps'
+      name: '*'
+    - namespace: '!argocd'
+      name: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
