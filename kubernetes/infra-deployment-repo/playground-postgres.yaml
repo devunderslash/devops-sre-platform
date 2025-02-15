@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/devunderslash/devops-sre-platform.git
     targetRevision: HEAD
-    path: /kubernetes/helm_postgres/postgresql
+    path: kubernetes/helm_postgres/postgresql
     helm:
       releaseName: playground-postgres
       valuesObject:
