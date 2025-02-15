@@ -20,5 +20,6 @@ output.txt
 *cluster-keys.json
 *.crt
 *.key
-/Users/user/Development/Projects/showcase-devops/kubernetes/cluster-keys.json
 
+# Other
+*.DS_Store

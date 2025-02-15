@@ -8,9 +8,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: infra
   source:
-    repoURL: https://github.com/devunderslash/devops-sre-platform/kubernetes/infra/playground-postgres.git
+    repoURL: https://github.com/devunderslash/devops-sre-platform.git
     targetRevision: HEAD
-    path: playground-postgres
+    path: /kubernetes/helm_postgres/postgresql
     helm:
       releaseName: playground-postgres
       valuesObject:
