@@ -8,16 +8,14 @@ metadata:
   name: platform-dev-appset
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      directories:
-      - path: kubernetes/apps-deployment-repo/apps/*/overlay/region1-dev
       repoURL: https://github.com/devunderslash/devops-sre-platform.git
       requeueAfterSeconds: 20
       revision: "HEAD"
-  syncPolicy: {}
+      directories:
+        - path: kubernetes/apps-deployment-repo/apps/*/overlay/region1-dev
+  # syncPolicy: {}
   template:
     metadata:
       labels:
@@ -26,24 +24,24 @@ spec:
       name: 'platform-dev-{{index .path.segments 1}}'
       namespace: apps
     spec:
+      project: platform-dev
+      source:
+        repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
+        targetRevision: 'HEAD'   
+        path: '{{.path.path}}'
       destination:
         namespace: apps
         server: https://kubernetes.default.svc # default cluster in minikube (displays as in-cluster)
-      ignoreDifferences:
-      - group: argoproj.io
-        jsonPointers:
-        - /status
-        kind: Application
-      project: platform-dev
-      source:
-        path: '{{.path.path}}'
-        repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
-        targetRevision: 'HEAD'   
-        # plugin: 
-        #   name: kustomize-helm   
       syncPolicy:
         automated:
           allowEmpty: false
           prune: true
           selfHeal: true
-status: {}
+      ignoreDifferences:
+        - group: argoproj.io
+          jsonPointers:
+            - /status
+          kind: Application
+        # plugin: 
+        #   name: kustomize-helm   
+# status: {}
