@@ -12,7 +12,7 @@ spec:
         env: dev
         targetRevision: HEAD
         namespace: apps
-        path: kubernetes/apps-deployment-repo/apps/{{appName}}/overlay/region1-dev
+        path: kubernetes/apps-deployment-repo/apps/attendance-api/overlay/region1-dev
   template:
     metadata:
       name: 'playground-{{appName}}-{{env}}'
