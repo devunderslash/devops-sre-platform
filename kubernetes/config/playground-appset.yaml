@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
   creationTimestamp: null
-  name: platform-dev
+  name: platform-dev-appset
   namespace: argocd
 spec:
   goTemplate: true
@@ -28,13 +28,13 @@ spec:
     spec:
       destination:
         namespace: apps
-        server: https://kubernetes.default.svc
+        # server: https://kubernetes.default.svc
       ignoreDifferences:
       - group: argoproj.io
         jsonPointers:
         - /status
         kind: Application
-      project: default
+      project: platform-dev
       source:
         path: '{{.path.path}}'
         repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
