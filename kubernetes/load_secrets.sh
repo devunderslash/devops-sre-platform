@@ -1,7 +1,3 @@
-# SECRET_KEY=your_secret_key
-# DATABASE_URL="sqlite:///your_database.db"
-# SQLALCHEMY_DATABASE_URI="sqlite:///db.sqlite3"
-
 #!/bin/bash
 
 # Set the address of your Vault instance

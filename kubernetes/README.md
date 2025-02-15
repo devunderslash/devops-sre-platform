@@ -82,10 +82,6 @@ kubectl create secret docker-registry ghcr-creds --docker-server=https://ghcr.io
 kubectl create secret docker-registry ghcr-creds --docker-server=https://ghcr.io --docker-username=$GITHUB_USERNAME --docker-password=$GITHUB_PASSWORD --docker-email=$GITHUB_USERNAME -n external-secrets
 ```
 
-## Deploy Infrastructure and Apps
-The infrastructure and apps directories represent separate git repositories. The infrastructure repository would contain some basic infrastructure such as databases or caches. The apps repository would contain the applications that would be deployed to the infrastructure. In production environments, these would be separate repositories.
-
-To deploy the infrastructure and apps, run the following commands:
 
 ```bash
 # Register repository
