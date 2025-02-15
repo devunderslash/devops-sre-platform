@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-ingress
+  annotations:
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  namespace: apps
+spec:
+  rules:
+  - host: attendance-api.playground.io
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: attendance-api
+            port:
+              number: 5000
