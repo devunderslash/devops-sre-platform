@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attendance-api
+  # annotations:
+    # reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: attendance-api
+  template:
+    metadata:
+      name: attendance-api
+      labels:
+        name: attendance-api
+        app.kubernetes.io/name: attendance
+    spec:
+      containers:
+        - name: attendance-api
+          image: "backend:0.0.7"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: attendance-api-base-config
+            - configMapRef:
+                name: attendance-api-overlays-config
+            - secretRef:
+                name: attendance-secret

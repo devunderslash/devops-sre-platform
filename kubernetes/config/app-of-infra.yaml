@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: infra-deployment-repo
-    repoURL: https://github.com/devunderslash/devops-sre-platform/kubernetes/config
+    repoURL: https://github.com/devunderslash/devops-sre-platform.git
     targetRevision: HEAD
   syncPolicy:
     automated: {}

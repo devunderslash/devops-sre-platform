@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attendance-api
+  labels:
+    app.kubernetes.io/name: attendance-server
+    app.kubernetes.io/instance: attendance-api
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: attendance-api
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1"
+            limits:
+              memory: "1Gi"
+          env: 
+          # Database
+            - name: SQLALCHEMY_DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: SQLALCHEMY_DATABASE_URI
+                  key: SQLALCHEMY_DATABASE_URI
+            # - name: DB_PORT
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: db-instance
+            #       key: port
+            # - name: DB_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: db-instance
+            #       key: username
+            # - name: DB_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: db-instance
+            #       key: password
+            # - name: DB_NAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: db-instance
+            #       key: name
+            # - name: DATABASE_URL
+            #   value: postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_ADDRESS):$(DB_PORT)/$(DB_NAME)
+

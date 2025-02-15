@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: playground-apps
+
+resources:
+- ../../base
+# - virtualservice.yaml
+# - vault-secrets.yaml
+
+patches:
+- path: deployment.yaml
+
+images:
+- name: "backend"
+  newName: 'ghcr.io/devunderslash/devops-sre-platform/backend'
+  newTag: 0.0.7
+
+
+transformers:
+    - region1-dev-labels.yaml
+
+configMapGenerator:
+- name: backend-api-overlays-config
+  literals:
+  - AUTH_ENABLED=true
+  - REGION=region1
+  - ENV=dev
+  - FLASK_ENV=development

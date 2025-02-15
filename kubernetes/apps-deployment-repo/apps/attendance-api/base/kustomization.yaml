@@ -10,8 +10,9 @@ labels:
 resources:
 - deployment.yaml
 - service.yaml
-- serviceaccount.yaml
+# - serviceaccount.yaml
 
 configMapGenerator:
 - literals:
   - INTERNAL_SECRET_KEY=secret
+  - PLATFORM=k8s
