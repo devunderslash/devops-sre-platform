@@ -27,7 +27,7 @@ spec:
       namespace: apps
     spec:
       destination:
-        namespace: 'apps'
+        namespace: apps
       ignoreDifferences:
       - group: argoproj.io
         jsonPointers:
