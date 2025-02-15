@@ -24,7 +24,7 @@ spec:
       name: 'platform-dev-{{index .path.segments 1}}'
       namespace: apps
     spec:
-      project: platform-dev
+      project: default # platform-dev
       source:
         repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
         targetRevision: 'HEAD'   
