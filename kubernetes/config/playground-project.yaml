@@ -13,10 +13,10 @@ spec:
   sourceRepos:
     - 'https://github.com/devunderslash/devops-sre-platform.git'
   destinations:
-    - namespace: 'apps'
-      name: 'in-cluster'
-    - namespace: '!argocd'
+    - namespace: '*'
       name: '*'
+    # - namespace: '!argocd'
+    #   name: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
