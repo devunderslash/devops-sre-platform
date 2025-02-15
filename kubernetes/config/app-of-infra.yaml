@@ -5,11 +5,11 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: argocd
+    namespace: infra
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: infra-deployment-repo
+    path: kubernetes/infra-deployment-repo
     repoURL: https://github.com/devunderslash/devops-sre-platform.git
     targetRevision: HEAD
   syncPolicy:
