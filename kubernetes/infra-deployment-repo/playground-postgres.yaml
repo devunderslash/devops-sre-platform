@@ -52,7 +52,7 @@ spec:
             whenScaled: Retain
             whenDeleted: Delete
 
-  project: default
+  project: platform-dev
   syncPolicy:
     automated:
       prune: true
