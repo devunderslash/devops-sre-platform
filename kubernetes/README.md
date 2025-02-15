@@ -91,7 +91,7 @@ argocd login --core
 kubectl config set-context --current --namespace=argocd
 
 # Add repo
-argocd repo add https://github.com/devunderslash/devops-sre-platform
+argocd repo add https://github.com/devunderslash/devops-sre-platform.git
 ```
 
 ## App of Apps Pattern
@@ -123,7 +123,25 @@ kubectl -n vault exec -it vault-0 -- /bin/sh -c "vault status"
 # You can find the Vault token in cluster-keys.json (after you run ./playground.sh up)
 ```
 
+## Postgres
+Postgres is deployed via the bitnami helm chart which can be found in the helm_postgres directory. Once it has been deployed by ArgoCD, you can access the Postgres database using the following command:
+```bash
+# Get the postgres password
+kubectl get secret --namespace infra playground-postgres-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d 
+kubectl -n infra exec -it playground-postgres-postgresql-0 -- /bin/bash
+```
 
+Some useful commands to validate db is running:
+```bash
+# login to the db
+psql -U pguser backend-db # password is in the secret
+# list databases
+\l
+# list tables
+\dt
+# list users
+\du
+```
 
 ### Common Issues
 

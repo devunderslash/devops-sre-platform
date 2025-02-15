@@ -28,6 +28,7 @@ spec:
     spec:
       destination:
         namespace: apps
+        server: https://kubernetes.default.svc
       ignoreDifferences:
       - group: argoproj.io
         jsonPointers:
