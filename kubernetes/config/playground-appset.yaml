@@ -1,47 +1,47 @@
----
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-  creationTimestamp: null
-  name: platform-dev-appset
-  namespace: argocd
-spec:
-  generators:
-  - git:
-      repoURL: https://github.com/devunderslash/devops-sre-platform.git
-      requeueAfterSeconds: 20
-      revision: "HEAD"
-      directories:
-        - path: kubernetes/apps-deployment-repo/apps/*/overlay/region1-dev
-  # syncPolicy: {}
-  template:
-    metadata:
-      labels:
-        # app.kubernetes.io/managed-by: argocd-autopilot
-        app.kubernetes.io/name: 'platform-dev-{{index .path.segments 1}}'
-      name: 'platform-dev-{{index .path.segments 1}}'
-      namespace: apps
-    spec:
-      project: platform-dev
-      source:
-        repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
-        targetRevision: 'HEAD'   
-        path: '{{.path.path}}'
-      destination:
-        namespace: apps
-        server: https://kubernetes.default.svc
-      syncPolicy:
-        automated:
-          allowEmpty: false
-          prune: true
-          selfHeal: true
-      ignoreDifferences:
-        - group: argoproj.io
-          jsonPointers:
-            - /status
-          kind: Application
-        # plugin: 
-        #   name: kustomize-helm   
-# status: {}
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "0"
+#   creationTimestamp: null
+#   name: platform-dev-appset
+#   namespace: argocd
+# spec:
+#   generators:
+#   - git:
+#       repoURL: https://github.com/devunderslash/devops-sre-platform.git
+#       requeueAfterSeconds: 20
+#       revision: "HEAD"
+#       directories:
+#         - path: kubernetes/apps-deployment-repo/apps/*/overlay/region1-dev
+#   # syncPolicy: {}
+#   template:
+#     metadata:
+#       labels:
+#         # app.kubernetes.io/managed-by: argocd-autopilot
+#         app.kubernetes.io/name: 'platform-dev-{{index .path.segments 1}}'
+#       name: 'platform-dev-{{index .path.segments 1}}'
+#       namespace: apps
+#     spec:
+#       project: platform-dev
+#       source:
+#         repoURL: 'https://github.com/devunderslash/devops-sre-platform.git'
+#         targetRevision: 'HEAD'   
+#         path: '{{.path.path}}'
+#       destination:
+#         namespace: apps
+#         server: https://kubernetes.default.svc
+#       syncPolicy:
+#         automated:
+#           allowEmpty: false
+#           prune: true
+#           selfHeal: true
+#       ignoreDifferences:
+#         - group: argoproj.io
+#           jsonPointers:
+#             - /status
+#           kind: Application
+#         # plugin: 
+#         #   name: kustomize-helm   
+# # status: {}

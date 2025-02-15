@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: app-of-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - projectName: platform-dev 
+        appName: attendance-api
+        env: dev
+        targetRevision: HEAD
+        namespace: apps
+        path: kubernetes/apps-deployment-repo/apps/{{appName}}/overlay/region1-dev
+  template:
+    metadata:
+      name: 'playground-{{appName}}-{{env}}'
+    spec:
+      project: '{{projectName}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      source:
+        repoURL: https://github.com/devunderslash/devops-sre-platform.git
+        targetRevision: '{{targetRevision}}'
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
