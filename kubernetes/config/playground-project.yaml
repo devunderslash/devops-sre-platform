@@ -13,6 +13,7 @@ spec:
   sourceRepos:
     - 'https://github.com/devunderslash/devops-sre-platform.git'
   destinations:
+    - namespace: apps
       server: https://kubernetes.default.svc
       name: in-cluster
     # - namespace: '*'
