@@ -21,7 +21,7 @@ spec:
           image: "backend:0.0.7"
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 5001
           envFrom:
             - configMapRef:
                 name: attendance-api-base-config
