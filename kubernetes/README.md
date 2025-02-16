@@ -50,6 +50,8 @@ kubectl config set-context --current --namespace=argocd
 - Add ArgoCD UI ip to etc/hosts. You can do this for any application that you want to access from the host machine and you have provided and ingress or a load balancer manifest.
 ```bash
 echo "127.0.0.1 argocd.playground.io" | sudo tee -a /etc/hosts
+# Also add any application that you want to access from the host machine, eg:
+echo "127.0.0.1 attendance-api.playground.io" | sudo tee -a /etc/hosts
 ```
 
 - Run minikube tunnel
@@ -84,14 +86,8 @@ kubectl create secret docker-registry ghcr-creds --docker-server=https://ghcr.io
 
 
 ```bash
-# Register repository
-argocd login --core
-
-# Set config context
-kubectl config set-context --current --namespace=argocd
-
 # Add repo
-argocd repo add https://github.com/devunderslash/devops-sre-platform.git
+argocd repo add https://github.com/devunderslash/devops-sre-platform.git --username $GITHUB_USERNAME --password $GITHUB_PASSWORD
 ```
 
 ## App of Apps Pattern
@@ -142,6 +138,24 @@ psql -U pguser backend-db # password is in the secret
 # list users
 \du
 ```
+
+### Example Application
+The example application is a simple attendance API that is deployed using the ArgoCD Application resource. The application is a simple REST API that allows you to create, read, update and delete attendance records.
+
+The application is deployed when the ArgoCD playground_appset_list.yaml is applied. The application is deployed to the apps namespace and can be accessed using the following command:
+```bash
+kubectl -n apps get svc attendance-api
+```
+
+The application can be used with some of the following commands:
+```bash
+curl -X GET http://attendance-api.playground.io/api/players
+```
+To POST a new player, run the following command:
+```bash
+curl -X POST http://attendance-api.playground.io/api/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
+```
+
 
 ### Common Issues
 
