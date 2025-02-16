@@ -21,7 +21,7 @@ jobs:
 
 # build the backend image with the dockerfile located: containerization/Dockerfile.backend
     - name: Build the backend image
-      run: docker build -t ghcr.io/${{ github.repository }}/backend:latest -f containerization/Dockerfile.backend .
+      run: docker build -t ghcr.io/${{ github.repository }}/backend:latest -f containerization/Dockerfile.backend_distroless .
 
 # login to Github Container Registry
     - name: 'Login to GitHub Container Registry'
