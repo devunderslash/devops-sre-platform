@@ -5,6 +5,7 @@ kind: Kustomization
 
 resources:
 - ../../base
+- ingress.yaml
 # - virtualservice.yaml
 # - vault-secrets.yaml
 
