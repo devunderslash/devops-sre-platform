@@ -14,6 +14,6 @@ spec:
         path: /
         backend:
           service:
-            name: attendance-api
+            name: attendance
             port:
               number: 5001

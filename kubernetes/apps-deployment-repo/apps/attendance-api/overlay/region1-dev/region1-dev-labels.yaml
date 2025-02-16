@@ -5,10 +5,10 @@ metadata:
 labels:
   app.kubernetes.io/name: attendance
   app.kubernetes.io/instance: attendance-api
-  app.kubernetes.io/version: "0.0.7"
-  app.kubernetes.io/component: backend
-  app.kubernetes.io/part-of: attendance
-  app.kubernetes.io/managed-by: kustomize
+  # app.kubernetes.io/version: "0.0.7"
+  # app.kubernetes.io/component: backend
+  # app.kubernetes.io/part-of: attendance
+  # app.kubernetes.io/managed-by: kustomize
 fieldSpecs:
 - path: metadata/labels
   create: true
