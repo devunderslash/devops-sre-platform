@@ -15,7 +15,7 @@ patches:
 images:
 - name: "backend"
   newName: 'ghcr.io/devunderslash/devops-sre-platform/backend'
-  newTag: 0.0.7
+  newTag: 0.0.8
 
 
 # transformers:
