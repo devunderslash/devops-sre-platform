@@ -16,4 +16,4 @@ spec:
           service:
             name: attendance-api
             port:
-              number: 5000
+              number: 5001
