@@ -18,8 +18,8 @@ images:
   newTag: 0.0.7
 
 
-transformers:
-    - region1-dev-labels.yaml
+# transformers:
+#     - region1-dev-labels.yaml
 
 configMapGenerator:
 - name: attendance-api-overlays-config
