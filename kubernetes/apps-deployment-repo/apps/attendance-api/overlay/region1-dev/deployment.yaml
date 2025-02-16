@@ -17,7 +17,7 @@ spec:
               cpu: "1"
             limits:
               memory: "1Gi"
-          env: 
+          # env: 
           # Database
             # - name: sqlalchemy_database_uri
             #   valueFrom:
