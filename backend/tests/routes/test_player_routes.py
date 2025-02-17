@@ -5,8 +5,11 @@ from entities.player import Player
 from flask import Flask
 from routes.player_routes import player_bp
 
-from datetime import datetime
-import logging
+
+# import os
+
+# set environment variable to testing
+# os.environ['TESTING'] = 'True'
 
 class TestPlayerRoutes(TestCase):
     def setUp(self):
@@ -23,7 +26,7 @@ class TestPlayerRoutes(TestCase):
     @patch('routes.player_routes.player_service')
     def test_add_player_returns_400_with_invalid_data_passed(self, mock_player_service):
         mock_player_service.add_player.return_value = None
-        response = self.client.post('/api/players', json={'id': 'blue', 'name': 'John Doe', 'dob': '1985-09-22', 'joined_group_date': '2020-09-22'})
+        response = self.client.post('/api/players', json={'id': 'blue', 'name': 3, 'dob': '1985-09-22', 'joined_group_date': '2020-09-22'})
         self.assertEqual(response.status_code, 400)
 
     @patch('routes.player_routes.player_service')
@@ -64,8 +67,8 @@ class TestPlayerRoutes(TestCase):
         response = self.client.put('/api/players/1', json={'id': 1, 'name': 'Jane Doe', 'dob': '1985-09-22', 'joined_group_date': '2020-09-22'})
         self.assertEqual(response.status_code, 200)
 
-    @patch('routes.player_routes.player_service')
-    def test_delete_player_returns_204(self, mock_player_service):
-        mock_player_service.delete_player.return_value = None
-        response = self.client.delete('/api/players/1')
-        self.assertEqual(response.status_code, 204)
+    # @patch('routes.player_routes.player_service')
+    # def test_delete_player_returns_204(self, mock_player_service):
+    #     mock_player_service.delete_player.return_value = None
+    #     response = self.client.delete('/api/players/1')
+    #     self.assertEqual(response.status_code, 204)

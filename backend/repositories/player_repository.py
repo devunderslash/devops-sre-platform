@@ -4,12 +4,16 @@ from repositories.base_repository import Repository
 
 class PlayerRepository(Repository):
     def __init__(self):
-        self.players = {}  # In-memory storage for now
+        self.players = {}
+        self.next_id = 1
 
     def get(self, id: int) -> Optional[Player]:
         return self.players.get(id)
 
     def add(self, player: Player) -> None:
+        if player.id is None:
+            player.id = self.next_id
+            self.next_id += 1
         self.players[player.id] = player
 
     def update(self, player: Player) -> None:

@@ -81,11 +81,9 @@ curl -X POST http://127.0.0.1:5000/api/players \
 -d '{
   "id": 1,
   "name": "John Doe",
-  "dob": "2010-05-15",
-  "age": 0, 
+  "dob": "2010-05-15", 
   "joined_group_date": "2023-01-01",
 }'
-# Age is calculated automatically based on the date of birth
 ```
 
 ### GET /api/players/<int:player_id>

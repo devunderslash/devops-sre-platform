@@ -6,11 +6,15 @@ from repositories.base_repository import Repository
 class TeamRepository(Repository):
     def __init__(self):
         self.teams = {}  # In-memory storage for now
+        self.next_id = 1
 
     def get(self, id: int) -> Optional[Team]:
         return self.teams.get(id)
 
     def add(self, team: Team) -> None:
+        if team.id is None:
+            team.id = self.next_id
+            self.next_id += 1
         self.teams[team.id] = team
 
     def update(self, team: Team) -> None:

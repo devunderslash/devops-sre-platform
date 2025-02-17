@@ -11,9 +11,8 @@ from entities.attendance import Attendance
 
 class TestAttendance(TestCase):
     def test_attendance(self):
-        attendance = Attendance(1, 1, 1, 'present')
-        self.assertEqual(attendance.id, 1)
+        attendance = Attendance(session_id=1, player_id=1, status='present')
         self.assertEqual(attendance.session_id, 1)
         self.assertEqual(attendance.player_id, 1)
         self.assertEqual(attendance.status, 'present')
-
+        self.assertEqual(attendance.id, None)

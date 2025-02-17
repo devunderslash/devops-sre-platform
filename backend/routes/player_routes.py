@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, request, jsonify
 from app import db
 from dataclasses import asdict
@@ -7,7 +8,9 @@ from entities.player import Player
 from services.player_service import PlayerService
 from validators.player_validation import PlayerValidation
 from services.attendance_service import AttendanceService
+from repositories.player_repository import PlayerRepository
 from repositories.sql_player_repository import SqlPlayerRepository
+from repositories.attendance_repository import AttendanceRepository
 from repositories.sql_attendance_repository import SqlAttendanceRepository
 
 
@@ -17,10 +20,19 @@ player_bp = Blueprint('player', __name__)
 
 # Initialize repository and service
 logger.info("Initializing player repository and service...")
-player_repository = SqlPlayerRepository(db_session=db.session)
-attendance_repository = SqlAttendanceRepository(db_session=db.session)
-player_service = PlayerService(player_repository)
-attendance_service = AttendanceService(attendance_repository)
+# I want to set up the repositories as the basic repositories for testing purposes, I want a conditional based on the environment
+if os.getenv('TESTING') == 'True':
+    player_repository = PlayerRepository()
+    attendance_repository = AttendanceRepository()
+    player_service = PlayerService(player_repository)
+    attendance_service = AttendanceService(attendance_repository)
+else:
+    # to use the SQL repositories
+    player_repository = SqlPlayerRepository(db_session=db.session)
+    attendance_repository = SqlAttendanceRepository(db_session=db.session)
+    player_service = PlayerService(player_repository)
+    attendance_service = AttendanceService(attendance_repository)
+
 
 
 @player_bp.route('/players', methods=['POST'])
@@ -32,6 +44,7 @@ def add_player():
         return jsonify(errors), 400
 
     player = Player(
+        # id needs to be passed as None to be auto-generated    
         name=validated_data['name'],
         dob=validated_data['dob'],
         joined_group_date=validated_data['joined_group_date'],

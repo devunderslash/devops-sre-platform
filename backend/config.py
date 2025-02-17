@@ -20,14 +20,3 @@ class ConfigFromEnvVars:
                 raise Exception(f'cannot init configuration from env vars. error={err}')
             
 
-# class DatabaseConfig:
-
-#     def __init__(self, app):
-#         self.db = SQLAlchemy(app)
-#         self.engine = self.create_db_url_from_env_or_local()
-
-#     def create_db_url_from_env_or_local(self):
-
-#         engine =  self.db.create_engine(os.getenv('DATABASE_URL'))
-#         return engine
-

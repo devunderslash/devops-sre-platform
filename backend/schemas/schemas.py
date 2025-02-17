@@ -1,12 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 import logging
 from app.database import db
 
 from sqlalchemy import Column, DateTime, Integer, String
-from sqlalchemy.orm import registry
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import registry, declarative_base
 from entities.player import Player
 from entities.team import Team
 from entities.session import Session
@@ -20,7 +19,6 @@ mapper_registry = registry()
 Base = declarative_base()
 
 
-@dataclass
 class PlayerTable(db.Model):
     __tablename__ = 'players'
     id: int = Column(Integer, primary_key=True, autoincrement=True)
@@ -29,7 +27,6 @@ class PlayerTable(db.Model):
     joined_group_date: datetime = Column(DateTime)
     
 
-@dataclass
 class TeamTable(db.Model):
     __tablename__ = 'teams'
     id: int = Column(Integer, primary_key=True, autoincrement=True)
@@ -37,10 +34,9 @@ class TeamTable(db.Model):
     coach: str = Column(String)
     manager: str = Column(String)
     league: str = Column(String)
-    players: List[Player] = field(default_factory=list)
+    players: Optional[List[Player]] = field(default_factory=list)
 
 
-@dataclass
 class SessionTable(db.Model):
     __tablename__ = 'sessions'
     id: int = Column(Integer, primary_key=True, autoincrement=True)
@@ -51,7 +47,6 @@ class SessionTable(db.Model):
     attendance_records: List[Attendance] = field(default_factory=list)
 
 
-@dataclass
 class AttendanceTable(db.Model):
     __tablename__ = 'attendance'
     id: int = Column(Integer, primary_key=True, autoincrement=True)

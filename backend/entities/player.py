@@ -3,7 +3,7 @@ from datetime import datetime
 
 @dataclass
 class Player:
-    id: int = field(init=False)
     name: str
     dob: datetime
     joined_group_date: datetime
+    id: int = field(default=None)  # Optional and auto-generated if not provided

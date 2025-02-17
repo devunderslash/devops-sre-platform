@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 
 class Repository(ABC):
+
     @abstractmethod
     def get(self, id: int) -> Optional[object]:
         pass

@@ -9,17 +9,17 @@ class TestTeamRepository(TestCase):
         self.repository = TeamRepository()
 
     def test_add_team(self):
-        self.repository.add(Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3']))
+        self.repository.add(Team(name='Team 1', coach='Coach 1', manager='Manager 1', league='League 1', players=['Player 1', 'Player 2', 'Player 3']))
         self.assertEqual(len(self.repository.teams), 1)
 
     def test_get_team(self):
-        team = Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3'])
+        team = Team(name='Team 1', coach='Coach 1', manager='Manager 1', league='League 1', players=['Player 1', 'Player 2', 'Player 3'])
         self.repository.add(team)
         self.assertEqual(self.repository.get(1), team)
 
     def test_get_team_by_name(self):
-        team1 = Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3'])
-        team2 = Team(2, 'Team 2', 'Coach 2', 'Manager 2' 'League 2', ['Player 4', 'Player 5', 'Player 6'])
+        team1 = Team(name='Team 1', coach='Coach 1', manager='Manager 1', league='League 1', players=['Player 1', 'Player 2', 'Player 3'])
+        team2 = Team(name='Team 2', coach='Coach 2', manager='Manager 2', league='League 2', players=['Player 4', 'Player 5', 'Player 6'])
         self.repository.add(team1)
         self.repository.add(team2)
         self.assertEqual(self.repository.get_by_name('Team 1'), team1)
@@ -30,16 +30,16 @@ class TestTeamRepository(TestCase):
         
 
     def test_update_team(self):
-        team = Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3'])
+        team = Team(name='Team 1', coach='Coach 1', manager='Manager 1', league='League 1', players=['Player 1', 'Player 2', 'Player 3'])
         self.repository.add(team)
         team.name = 'Team 2'
         self.repository.update(team)
         self.assertEqual(self.repository.get(1).name, 'Team 2')
 
     def test_delete_team(self):
-        team1 = Team(1, 'Team 1', 'Coach 1', 'Manager 1' 'League 1', ['Player 1', 'Player 2', 'Player 3'])
-        team2 = Team(2, 'Team 2', 'Coach 2', 'Manager 2' 'League 2', ['Player 4', 'Player 5', 'Player 6'])
-        team3 = Team(3, 'Team 3', 'Coach 3', 'Manager 3' 'League 3', ['Player 7', 'Player 8', 'Player 9'])
+        team1 = Team(name='Team 1', coach='Coach 1', manager='Manager 1', league='League 1', players=['Player 1', 'Player 2', 'Player 3'])
+        team2 = Team(name='Team 2', coach='Coach 2', manager='Manager 2', league='League 2', players=['Player 4', 'Player 5', 'Player 6'])
+        team3 = Team(name='Team 3', coach='Coach 3', manager='Manager 3', league='League 3', players=['Player 7', 'Player 8', 'Player 9'])
         self.repository.add(team1)
         self.repository.add(team2)
         self.repository.add(team3)
@@ -49,6 +49,6 @@ class TestTeamRepository(TestCase):
         self.assertEqual(self.repository.get(3), team3)
 
     def test_list_all_teams(self):
-        self.repository.add(Team(2, 'Team 2', 'Coach 2', 'Manager 2' 'League 2', ['Player 4', 'Player 5', 'Player 6']))
-        self.repository.add(Team(3, 'Team 3', 'Coach 3', 'Manager 3' 'League 3', ['Player 7', 'Player 8', 'Player 9']))
+        self.repository.add(Team(name='Team 2', coach='Coach 2', manager='Manager 2', league='League 2', players=['Player 4', 'Player 5', 'Player 6']))
+        self.repository.add(Team(name='Team 3', coach='Coach 3', manager='Manager 3', league='League 3', players=['Player 7', 'Player 8', 'Player 9']))
         self.assertEqual(len(self.repository.list_all()), 2)

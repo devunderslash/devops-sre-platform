@@ -7,10 +7,10 @@ from entities.attendance import Attendance
 
 @dataclass
 class Session:
-    id: int = field(init=False)
     datetime: datetime
     location: str
     session_type: str # training, match, etc
     teams: List[str] = field(default_factory=list)  # Team names
     attendance_records: List[Attendance] = field(default_factory=list)  # Attendance records
+    id: int = field(default=None)  # Optional and auto-generated if not provided
 

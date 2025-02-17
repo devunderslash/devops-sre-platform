@@ -10,19 +10,19 @@ class TestAttendanceService(TestCase):
         self.service = AttendanceService(AttendanceRepository())
 
     def test_add_attendance(self):
-        self.service.add_attendance(Attendance(1, 1, 1, 'present'))
-        self.service.add_attendance(Attendance(2, 1, 2, 'absent'))
+        self.service.add_attendance(Attendance(session_id=1, player_id=1, status='present'))
+        self.service.add_attendance(Attendance(session_id=1, player_id=2, status='absent'))
         self.assertEqual(len(self.service.list_all_attendances()), 2)
 
     def test_get_attendance(self):
-        attendance = Attendance(1, 1, 1, 'present')
+        attendance = Attendance(session_id=1, player_id=1, status='present')
         self.service.add_attendance(attendance)
         self.assertEqual(self.service.get_attendance(1), attendance)
 
     def test_get_attendance_by_session(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 2, 1, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=2, player_id=1, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -30,9 +30,9 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance_by_session(2), [attendance3])
 
     def test_get_attendance_by_player(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 2, 1, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=2, player_id=1, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -40,9 +40,9 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance_by_player(2), [attendance2])
 
     def test_get_attendance_by_status(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 2, 1, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=2, player_id=1, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -51,8 +51,8 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance_by_status('late'), [attendance3])
 
     def test_update_attendance(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         attendance1.status = 'late'
@@ -64,9 +64,9 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance(2).status, 'present')
 
     def test_update_attendance_by_session_id(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 2, 1, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=2, player_id=1, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -77,9 +77,9 @@ class TestAttendanceService(TestCase):
 
 
     def test_delete_attendance(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 1, 3, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=1, player_id=3, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -90,9 +90,9 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance(3), attendance3)
 
     def test_delete_attendance_by_player_id(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 1, 3, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=1, player_id=3, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -102,9 +102,9 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance(2), attendance2)
 
     def test_delete_attendance_by_session(self):
-        attendance1 = Attendance(1, 1, 1, 'present')
-        attendance2 = Attendance(2, 1, 2, 'absent')
-        attendance3 = Attendance(3, 2, 1, 'late')
+        attendance1 = Attendance(session_id=1, player_id=1, status='present')
+        attendance2 = Attendance(session_id=1, player_id=2, status='absent')
+        attendance3 = Attendance(session_id=2, player_id=1, status='late')
         self.service.add_attendance(attendance1)
         self.service.add_attendance(attendance2)
         self.service.add_attendance(attendance3)
@@ -114,9 +114,10 @@ class TestAttendanceService(TestCase):
         self.assertEqual(self.service.get_attendance(3), attendance3)
 
     def test_list_all_attendances(self):
-        self.service.add_attendance(Attendance(1, 1, 1, 'present'))
-        self.service.add_attendance(Attendance(2, 1, 2, 'absent'))
+        self.service.add_attendance(Attendance(session_id=1, player_id=1, status='present'))
+        self.service.add_attendance(Attendance(session_id=1, player_id=2, status='absent'))
         self.assertEqual(len(self.service.list_all_attendances()), 2)
 
     def test_list_all_attendances_empty(self):
         self.assertEqual(len(self.service.list_all_attendances()), 0)
+        

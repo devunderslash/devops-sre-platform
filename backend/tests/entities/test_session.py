@@ -13,8 +13,8 @@ from entities.session import Session
 
 class TestSession(TestCase):
     def test_session(self):
-        session = Session(1, datetime(2020, 9, 22, 18, 30, 00), 'location A', 'training', ['team A', 'team B'], ['Player 1', 'Player 2'])
-        self.assertEqual(session.id, 1)
+        session = Session(datetime(2020, 9, 22, 18, 30, 00), 'location A', 'training', ['team A', 'team B'], ['Player 1', 'Player 2'])
+        self.assertEqual(session.id, None)
         self.assertEqual(session.datetime, datetime(2020, 9, 22, 18, 30, 00))
         self.assertEqual(session.location, 'location A')
         self.assertEqual(session.session_type, 'training')

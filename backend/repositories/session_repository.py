@@ -7,11 +7,15 @@ from entities.attendance import Attendance
 class SessionRepository(Repository):
     def __init__(self):
         self.sessions = {}  # In-memory storage for now
+        self.next_id = 1
 
     def get(self, id: int) -> Session:
         return self.sessions.get(id)
 
     def add(self, session: Session) -> None:
+        if session.id is None:
+            session.id = self.next_id
+            self.next_id += 1
         self.sessions[session.id] = session
 
     def update(self, session: Session) -> None:
