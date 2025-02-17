@@ -96,30 +96,12 @@ playground_up() {
     fi
 
 
-    # Setup External Secrets Operator
-    # Create a secret 'external-secrets/vault-creds.token' for ESO auth.
-    if kubectl -n external-secrets get secret vault-creds > /dev/null;then 
-      print_message "vault-creds secret already exists in external-secret"
-    else 
-      print_message "creating vault-creds secret in external-secret"
-      kubectl -n external-secrets create secret generic vault-creds --from-literal=token=$VAULT_ROOT_TOKEN
-      print_message "vault-creds secret is: $VAULT_ROOT_TOKEN"
-    fi
+    # Propagate vault credentials for the namespaces - To be tested
+    propagate_secrets $ESO_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
+    propagate_secrets $APPS_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
+    propagate_secrets $INFRA_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
+  
 
-
-    if kubectl -n $APPS_NAMESPACE get secret vault-creds > /dev/null;then 
-      print_message "vault-creds secret already exists in $APPS_NAMESPACE"
-    else 
-      print_message "creating vault-creds secret in $APPS_NAMESPACE"
-      kubectl -n $APPS_NAMESPACE create secret generic vault-creds --from-literal=token=$VAULT_ROOT_TOKEN
-    fi
-
-    if kubectl -n $INFRA_NAMESPACE get secret vault-creds > /dev/null;then 
-      print_message "vault-creds secret already exists in $INFRA_NAMESPACE"
-    else 
-      print_message "creating vault-creds secret in $INFRA_NAMESPACE"
-      kubectl -n $INFRA_NAMESPACE create secret generic vault-creds --from-literal=token=$VAULT_ROOT_TOKEN
-    fi
 
 		print_message "setting up external secrets"
 
@@ -364,11 +346,24 @@ configure_vault_backend() {
   fi
 }
 
+propagate_secrets() {
+  local namespace="$1"
+  local secret_name="$2"
+  local vault_token="$3"
+
+  if kubectl -n $namespace get secret $secret_name > /dev/null;then 
+    print_message "$secret_name secret already exists in $namespace"
+  else 
+    print_message "creating $secret_name secret in $namespace"
+    kubectl -n $namespace create secret generic $secret_name --from-literal=token=$vault_token
+  fi
+}
+
 
 
 playground_down() {
     # Delete the namespaces
-    namespaces=($ARGOCD_NAMESPACE $INFRA_NAMESPACE $APPS_NAMESPACE, $VAULT_NAMESPACE, $ESO_NAMESPACE)
+    namespaces=($ARGOCD_NAMESPACE $INFRA_NAMESPACE $APPS_NAMESPACE, $VAULT_NAMESPACE, $ESO_NAMESPACE, $VSO_NAMESPACE)
     for ns in "${namespaces[@]}"; do
         delete_namespace $ns
     done
