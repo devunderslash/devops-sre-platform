@@ -55,3 +55,7 @@ terraform apply
 You will need to replace `<infra-type>` with the infrastructure type you want to deploy. You can choose from `three-tier`, `eks`, or `lightsail`.
 
 You will need to enter `yes` when prompted to deploy the infrastructure.
+
+
+## Resources
+- https://section411.com/2019/07/hello-world/
