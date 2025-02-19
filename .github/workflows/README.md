@@ -17,3 +17,8 @@ Please ensure you have the following repository settings allowed to create a pac
 <!-- image -->
 ![GH Actions Settings](.github/workflows/gh_actions_settings.png)
 
+TODO:
+- Add more details on how to setup the CI/CD pipeline
+- Create run tests job
+- Create SAST test using bandit
+- Create example for deploying to ECR
