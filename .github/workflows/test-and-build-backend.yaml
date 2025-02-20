@@ -105,6 +105,12 @@ jobs:
         docker push ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
         docker push ghcr.io/${{ github.repository }}/backend:${{ env.TAG }}
 
+    - name: Get image digest
+      id: digest
+      run: |
+        DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/${{ github.repository }}/backend:latest)
+          echo "DIGEST=${DIGEST}" >> $GITHUB_ENV
+
     # Sign the image with Cosign and attestations (metadata) (optional)
     - uses: sigstore/cosign-installer@main
 
@@ -113,11 +119,11 @@ jobs:
 
     - name: Sign container image
       run: |
-        cosign sign --key cosign.key \
+        cosign sign --key cosign.key  --yes \
           -a "repo=${{ github.repository }}" \
           -a "workflow=${{ github.workflow }}" \
           -a "ref=${{ github.sha }}" \
-          ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+          ${{ env.DIGEST }}
       env:
         COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
 
