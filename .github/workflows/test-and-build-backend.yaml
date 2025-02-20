@@ -1,7 +1,6 @@
 # Github action to build the backend image and push it to Github Container Registry
 name: Test and Build Backend Image
 
-
 on:
 # trigger workflow manually
   workflow_dispatch:
@@ -110,7 +109,7 @@ jobs:
     - uses: sigstore/cosign-installer@main
 
     - name: Write signing key to disk (only needed for `cosign sign --key`)
-      run: echo "${{ secrets.SIGNING_SECRET }}" > cosign.key
+      run: echo "${{ secrets.COSIGN_KEY}}" > cosign.key
 
     - name: Sign container image
       run: |
@@ -120,7 +119,7 @@ jobs:
           -a "ref=${{ github.sha }}" \
           ghcr.io/${{ github.repository }}/backend:${{ env.TAG }}
       env:
-        COSIGN_PASSWORD: ""
+        COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
 
     # - name: Notify Slack
     #   uses: rtCamp/action-slack-notify@v2
