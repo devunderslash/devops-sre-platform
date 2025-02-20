@@ -13,6 +13,14 @@ jobs:
       contents: read
       packages: write
 
+    env:
+      SECRET_KEY: 'notasecret'
+      DATABASE_URL: "sqlite:///your_database.db"
+      SQLALCHEMY_DATABASE_URI: "sqlite:///db.sqlite3"
+      SQLALCHEMY_TRACK_MODIFICATIONS: False
+      SQLALCHEMY_ENGINE_OPTIONS: "nothing_of_importance"
+
+
     steps:  
     # actions/checkout@v3 is a community action that checks out your repository so your workflow can access it
     - uses: actions/checkout@v3
