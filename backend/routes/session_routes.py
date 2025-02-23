@@ -33,19 +33,21 @@ def add_session():
         teams=validated_data['teams'],
         attendance_records=validated_data['attendance_records']
     )
-
+    logger.info(f"Adding session: {session}")
     session_service.add_session(session)
     return jsonify({"message": "Session added"}), 201
 
 
 @session_bp.route('/sessions', methods=['GET'])
 def list_all_sessions():
+    logger.info("Listing all sessions")
     sessions = session_service.list_all_sessions()
     return jsonify([asdict(session) for session in sessions]), 200
 
 
 @session_bp.route('/sessions/<int:id>', methods=['GET'])
 def get_session(id):
+    logger.info(f"Getting session with id: {id}")
     session = session_service.get_session(id)
     if session:
         return jsonify(asdict(session)), 200
@@ -53,6 +55,7 @@ def get_session(id):
 
 @session_bp.route('/sessions/<string:datetime>', methods=['GET'])
 def get_session_by_date(datetime):
+    logger.info(f"Getting session with date: {datetime}")
     session = session_service.get_session_by_date(datetime)
     if session:
         return jsonify(asdict(session)), 200
@@ -74,12 +77,13 @@ def update_session(id):
         teams=validated_data['teams'],
         attendance_records=validated_data['attendance_records']
     )
-
+    logger.info(f"Updating session: {session}")
     session_service.update_session(session)
     return jsonify({"message": "Session updated"}), 200
 
 # delete
 @session_bp.route('/sessions/<int:id>', methods=['DELETE'])
 def delete_session(id):
+    logger.info(f"Deleting session with id: {id}")
     session_service.delete_session(id)
     return jsonify({"message": "Session deleted"}), 200

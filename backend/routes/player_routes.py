@@ -50,18 +50,21 @@ def add_player():
         joined_group_date=validated_data['joined_group_date'],
     )
 
+    logger.info(f"Adding player: {player}")
     player_service.add_player(player)
     return jsonify({"message": "Player added"}), 201
 
 
 @player_bp.route('/players', methods=['GET'])
 def list_all_players():
+    logger.info("Listing all players")
     players = player_service.list_all_players()
     return jsonify([asdict(player) for player in players]), 200
 
 
 @player_bp.route('/players/<int:id>', methods=['GET'])
 def get_player(id):
+    logger.info(f"Getting player with id: {id}")
     player = player_service.get_player(id)
     if player:
         return jsonify(asdict(player)), 200
@@ -69,6 +72,7 @@ def get_player(id):
 
 @player_bp.route('/players/<string:name>', methods=['GET'])
 def get_player_by_name(name):
+    logger.info(f"Getting player with name: {name}")
     player = player_service.get_player_by_name(name)
     if player:
         return jsonify(asdict(player))
@@ -77,6 +81,7 @@ def get_player_by_name(name):
 
 @player_bp.route('/players/<int:id>', methods=['PUT'])
 def update_player(id):
+    logger.info(f"Updating player with id: {id}")
     data = request.json
     player = Player(
         id=id,
@@ -90,7 +95,9 @@ def update_player(id):
 
 @player_bp.route('/players/<int:id>', methods=['DELETE'])
 def delete_player(id):
+    logger.info(f"Deleting player with id: {id}")
     player_service.delete_player(id)
+    # delete the attendance records for the player
     attendance_service.delete_attendance_by_player_id(id)
 
     return jsonify({"message": "Player deleted"}), 204

@@ -34,17 +34,19 @@ def add_team():
         coach=validated_data['coach'],
         player=validated_data['player']
     )
-
+    logger.info(f"Adding team: {team}")
     team_service.add_team(team)
     return jsonify({"message": "Team added"}), 201
 
 @team_bp.route('/teams', methods=['GET'])
 def list_all_teams():
+    logger.info("Listing all teams")
     teams = team_service.list_all_teams()
     return jsonify([asdict(team) for team in teams]), 200
 
 @team_bp.route('/teams/<int:id>', methods=['GET'])
 def get_team(id):
+    logger.info(f"Getting team with id: {id}")
     team = team_service.get_team(id)
     if team:
         return jsonify(asdict(team)), 200
@@ -52,6 +54,7 @@ def get_team(id):
 
 @team_bp.route('/teams/<string:name>', methods=['GET'])
 def get_team_by_name(name):
+    logger.info(f"Getting team with name: {name}")
     team = team_service.get_team_by_name(name)
     if team:
         return jsonify(asdict(team)), 200
@@ -75,11 +78,13 @@ def update_team(id):
         player=validated_data['player']
     )
 
+    logger.info(f"Updating team with id: {id}")
     team_service.update_team(team)
     return jsonify({"message": "Team updated"}), 200
 
 # delete
 @team_bp.route('/teams/<int:id>', methods=['DELETE'])
 def delete_team(id):
+    logger.info(f"Deleting team with id: {id}")
     team_service.delete_team(id)
     return jsonify({"message": "Team deleted"}), 200
