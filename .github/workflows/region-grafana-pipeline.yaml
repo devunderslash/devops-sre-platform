@@ -1,0 +1,35 @@
+# I want to create a reusable github action pipeline that can be used to deploy Grafana dashboards to multiple regions.
+
+# Region Grafana Pipeline
+
+on:
+  workflow_dispatch:
+    
+# on:
+#   push:
+#     branches:
+#       - main
+
+# on:
+#   pull_request_review:
+#     types: [submitted]
+#     branches:
+#       - main
+
+env: 
+  GRAFANA_URL: ${{ secrets.GRAFANA_URL }}
+  GRAFANA_AUTH: ${{ secrets.GRAFANA_AUTH }}
+
+jobs:
+  terraform_test_and_apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform Plan and Apply
+        id: plan_apply
+        uses: ./.github/observability_pipelines/plan_apply
+        with:
+          terraform_directory: "observability/grafana/deployments/product/region"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          aws_region: "us-west-2"

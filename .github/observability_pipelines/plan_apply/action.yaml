@@ -1,0 +1,110 @@
+name: 'Terraform setup and plan'
+description: 'Setup Terraform and creates plan'
+inputs:
+  terraform_directory:
+    description: 'Directory that holds Terraform code'
+    required: true
+  github_token: 
+    description: 'GitHub token for auth'
+    required: true
+  aws_region:
+    description: 'AWS region'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: 'Set up AWS credentials'
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: '${{ inputs.aws_region }}'
+
+    - name: Terraform Init
+      id: init
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        terraform init
+
+    - name: Terraform Validate
+      id: validate
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        terraform validate
+
+    - name: Terraform Format
+      id: format
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        terraform fmt -check=true
+
+    - name: Terraform Plan
+      id: plan
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        echo 'plan<<EOF' >> $GITHUB_OUTPUT
+        terraform plan -no-color -out=tfplan >> $GITHUB_OUTPUT
+        echo 'EOF' >> $GITHUB_OUTPUT
+
+    - name: Terraform Apply
+      id: apply
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        terraform apply -auto-approve tfplan
+
+    - name: Terraform Output
+      id: output
+      working-directory: ${{ inputs.terraform_directory }}
+      shell: bash
+      run: |
+        terraform output -json > output.json
+
+    # - name: Notify Slack
+    #   uses: rtCamp/action-slack-notify@v2
+    #   with:
+    #     status: ${{ job.status }}
+    #     author_name: ${{ github.actor }}
+    #     author_icon: ${{ github.actor }}
+    #     title: ${{ github.repository }}
+    #     text: ${{ github.sha }}
+    #     fields: repo, sha, event, status, workflow, job, ref
+    #     slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #     slack_channel: ${{ secrets.SLACK_CHANNEL }}
+    #     slack_username: ${{ secrets.SLACK_USERNAME }}
+
+
+
+
+# Additional possible steps below if you want to step the process into plan/apply stages. For Grafana observability, this is not necessary:
+
+
+    # - name: Save Artifact
+    #   id: save-artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: ${{ inputs.pr_id }}-tf-plan
+    #     path: ${{ inputs.terraform_directory }}/tfplan
+
+    # - name: Comment Plan
+    #   id: comment-plan
+    #   uses: peter-evans/create-or-update-comment@v2
+    #   with:
+    #     token: ${{ inputs.github_token }}
+    #     issue-number: ${{ inputs.pr_id }}
+    #     body: |
+    #       Terraform Plan:
+
+    #       ```
+    #       ${{ steps.plan.outputs.plan }}
+    #       ```
+
+    #       Plan saved to GH artifacts.
