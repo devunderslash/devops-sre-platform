@@ -15,10 +15,6 @@ Please ensure you have the following repository settings allowed to create a pac
 - Go to the "Actions" -> "General" tab
 - Allow Actions to create and approve Pull Requests
 
-## Standard Operating for Application Pipelines
-For the backend you can see that there is a single pipeline that runs both tests and then builds and signs the image. These would generally be 2 separate pipelines but for the sake of simplicity they are combined. The standard operating procedure for production would be to have a pipeline that runs the tests and then a separate pipeline that builds and signs the image. The image would then be pushed to a registry and then deployed to the environment. The stages at which each is triggered is dependent on the workflow: 
-- Tests and vaildation should be run on all PR's and upon merge to main branch when the PR is reviewed and approved. 
-- The build and sign of the image should be run upon merge to the main branch and then the deployment should be run upon the image being pushed to the registry.
 
 ## Standard Operating for Observability Pipelines
 For the Observability pipelines the attempt here is to display a pipeline that takes inputs from the main workflow and then applies them based on product/region. For example if you were to use a Grafana instance that is in US-EAST-1 for product-1 and contains the prod and uat environments you may have a deployments directory that looks like this:
@@ -26,9 +22,11 @@ For the Observability pipelines the attempt here is to display a pipeline that t
 deployments/
 ├── product-1
 │   ├── us-east-1
-│   │   |-- main.tf
+│   │   |-- main.tf - This would be the main terraform configuration for the region
 |   |   |-- prod
+|   |   |   |-- main.tf
 |   |   |-- uat
+|   |   |   |-- main.tf
 ```
 The pipeline would then take the inputs from the main workflow for example:
 ```
@@ -39,7 +37,12 @@ aws_region: "us-east-1"
 
 This would then be used in the pipeline to apply the terraform configuration to the correct environment. This is a simple example but the idea is to show how you can use the inputs from the main workflow to apply the correct configuration to the correct environment. Ideally the reuasable actions could be in a central repo and used in workflows across the organisation.
 
-## Image Signing
+## Standard Operating for Application Pipelines
+For the backend you can see that there is a single pipeline that runs both tests and then builds and signs the image. These would generally be 2 separate pipelines but for the sake of simplicity they are combined. The standard operating procedure for production would be to have a pipeline that runs the tests and then a separate pipeline that builds and signs the image. The image would then be pushed to a registry and then deployed to the environment. The stages at which each is triggered is dependent on the workflow: 
+- Tests and vaildation should be run on all PR's and upon merge to main branch when the PR is reviewed and approved. 
+- The build and sign of the image should be run upon merge to the main branch and then the deployment should be run upon the image being pushed to the registry.
+
+### Image Signing
 For the Image signing step to work you will need to do the following:
 - Generate a cosign key pair and add a password
 ```bash
