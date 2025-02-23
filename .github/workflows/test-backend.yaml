@@ -1,0 +1,79 @@
+# Github action to test the backend image
+name: Test and Build Backend Image
+
+on:
+# trigger workflow manually
+  workflow_dispatch:
+
+# on:  
+#   push:
+#   pull_request:
+#     branches:
+#       - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    env:
+      SECRET_KEY: 'notasecret'
+      DATABASE_URL: "sqlite:///your_database.db"
+      SQLALCHEMY_DATABASE_URI: "sqlite:///db.sqlite3"
+      SQLALCHEMY_TRACK_MODIFICATIONS: False
+      SQLALCHEMY_ENGINE_OPTIONS: "nothing_of_importance"
+
+
+    steps:  
+    # actions/checkout@v3 is a community action that checks out your repository so your workflow can access it
+    - uses: actions/checkout@v3
+    - name: Set up Python 3
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.13.1"
+
+    # Install dependencies, run tests and output test results and coverage
+    - name: Set up Python virtual environment
+      run: |
+        cd ./backend
+        python3 -m venv venv
+        source venv/bin/activate
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        if [ -f ./backend/requirements.txt ]; then pip install -r ./backend/requirements.txt; fi
+
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/backend" >> $GITHUB_ENV
+
+    - name: Test with pytest
+      run: |
+        source ./backend/venv/bin/activate
+        coverage run -m pytest -v
+        coverage report
+
+    - name: Output test results and coverage
+      run: |
+        echo "## Test Coverage Report Summary" >> $GITHUB_STEP_SUMMARY
+        coverage report | grep TOTAL | awk '{print "| Stmts | Miss | Cover. |\n| ----- | ---- | ------ |\n| " $2 " | " $3 " | " $4 " |"}' >> $GITHUB_STEP_SUMMARY
+
+    # TODO:
+    # run Bandit, SAST, DAST, etc.
+
+
+    # - name: Notify Slack
+    #   uses: rtCamp/action-slack-notify@v2
+    #   with:
+    #     status: ${{ job.status }}
+    #     author_name: ${{ github.actor }}
+    #     author_icon: ${{ github.actor }}
+    #     title: ${{ github.repository }}
+    #     text: ${{ github.sha }}
+    #     fields: repo, sha, event, status, workflow, job, ref
+    #     slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #     slack_channel: ${{ secrets.SLACK_CHANNEL }}
+    #     slack_username: ${{ secrets.SLACK_USERNAME }}
