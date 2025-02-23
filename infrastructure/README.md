@@ -58,4 +58,16 @@ You will need to enter `yes` when prompted to deploy the infrastructure.
 
 
 ## Resources
-- https://section411.com/2019/07/hello-world/
+- [ECS Networking](https://section411.com/2019/07/hello-world/)
+- [Native s3 Locking](https://rafaelmedeiros94.medium.com/goodbye-dynamodb-terraform-s3-backend-now-supports-native-locking-06f74037ad39)
+- [Deploying container from local docker](https://erik-ekberg.medium.com/terraform-ecs-fargate-example-1397d3ab7f02)
+- [Structuring Terraform Projects](https://spacelift.io/blog/terraform-files#best-practices-for-structuring-terraform-projects)
+
+Quick Info Articles on AWS:
+- [ASGs and NACLs](https://medium.com/awesome-cloud/aws-difference-between-security-groups-and-network-acls-adc632ea29ae)
+- [IGW and NAT Gateway](https://medium.com/awesome-cloud/aws-vpc-difference-between-internet-gateway-and-nat-gateway-c9177e710af6)
+- [ALB and NLB](https://medium.com/awesome-cloud/aws-difference-between-application-load-balancer-and-network-load-balancer-cb8b6cd296a4)
+- [EKS and ECS](https://medium.com/awesome-cloud/aws-amazon-eks-vs-amazon-ecs-comparison-difference-between-eks-and-ecs-7451abd23859)
+- [SQS and SNS](https://medium.com/awesome-cloud/aws-difference-between-sqs-and-sns-61a397bf76c5)
+- [Aurora and RDS](https://medium.com/awesome-cloud/aws-difference-between-amazon-aurora-and-amazon-rds-comparison-aws-aurora-vs-aws-rds-databases-60a69dbec41f)
+- [Parameter Store and Secrets Manager](https://medium.com/awesome-cloud/aws-difference-between-secrets-manager-and-parameter-store-systems-manager-f02686604eae)

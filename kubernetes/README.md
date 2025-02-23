@@ -168,6 +168,8 @@ Vault commands with this solution as not accessible from the host machine. To ac
 
 ### References
 - [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
+- [ArgoCD Deployment Patterns](https://platform.cloudogu.com/en/blog/gitops-repository-patterns-part-6-examples/)
 - [Vault](https://www.vaultproject.io/)
 - [External Secrets Operator](https://external-secrets.io/latest/provider/kubernetes/)
+- [ESO Implementation](https://colinwilson.uk/2022/08/22/secrets-management-with-external-secrets-argo-cd-and-gitops/)
 

@@ -46,6 +46,11 @@ I have designated my commit commits as per the type of work being undertook, her
 
 3. Break stuff, fix stuff, and learn stuff.
 
+## Resources
+- [DevOps](https://www.atlassian.com/devops)
+- [SRE](https://landing.google.com/sre/books/)
+- [Platform Engineering](https://platformengineering.org/blog/what-is-platform-engineering)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

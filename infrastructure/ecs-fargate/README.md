@@ -71,5 +71,5 @@ curl -X GET <load balancer output>/api/players
 ## Resource
 
 - [ECS Provider](https://registry.terraform.io/modules/terraform-aws-modules/ecs/aws/latest)
-
+- [ECS Task Execution Role](https://registry.terraform.io/modules/dod-iac/ecs-task-execution-role/aws/latest)
 - [In Depth ECS article](https://erik-ekberg.medium.com/terraform-ecs-fargate-example-1397d3ab7f02)

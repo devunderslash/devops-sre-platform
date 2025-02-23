@@ -58,10 +58,18 @@ cosign generate-key-pair
 - Add the key to the repository secrets as `COSIGN_PASSWORD`
 
 
-<!-- image -->
 ![GH Actions Settings](.github/workflows/gh_actions_settings.png)
 
 TODO:
 - Add more details on how to setup the CI/CD pipeline
 - Create SAST test using bandit
 - Create example for deploying to ECR
+
+## Resources
+- [Github Actions](https://docs.github.com/en/actions)
+- [Reusable Actions](https://medium.com/@gallaghersam95/the-best-terraform-cd-pipeline-with-github-actions-6ecbaa5f3762) 
+- [Reusable Actions example](https://github.com/GallagherSam/best-terraform-cd-article/tree/main)
+- [Cosign](https://www.civo.com/learn/supply-chain-security)
+- [Cosign Implementation](https://github.blog/security/supply-chain-security/safeguard-container-signing-capability-actions/)
+- [Cosign Github Action](https://github.com/avisi-cloud/cosign-tutorial/blob/main/.github/workflows/release.yml)
+- [Slack integration](https://axolo.co/blog/p/top-4-github-action-slack-integration)
