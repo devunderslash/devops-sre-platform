@@ -60,6 +60,13 @@ coverage html
 ```
 Then open the `htmlcov/index.html` file in a browser.
 
+## Running Security Tests
+
+To run the security tests, run the following command:
+```bash
+bandit -c bandit.yaml -r .
+```
+
 
 ## API Endpoints
 

@@ -1,0 +1,1 @@
+exclude_dirs: [tests, venv, instance, migrations, htmlcov, .env]
