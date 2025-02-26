@@ -10,6 +10,7 @@ VAULT_NAMESPACE="vault"
 VSO_NAMESPACE="vault-secrets"
 ESO_NAMESPACE="external-secrets"
 APPS_NAMESPACE="apps"
+MONITORING_NAMESPACE="kube-prometheus-stack"
 
 # main method
 main() {
@@ -61,6 +62,9 @@ playground_up() {
     deploy_argocd $ARGOCD_NAMESPACE
 
     # Helm installs (following params - repo_name repo_url release_name chart_path namespace)
+
+    # Install kube-prometheus-stack
+    helm_install "prometheus-community" "https://prometheus-community.github.io/helm-charts" "kube-prometheus-stack" "prometheus-community/kube-prometheus-stack" $MONITORING_NAMESPACE
     
     # Install external-secrets 
     helm_install "external-secrets" "https://charts.external-secrets.io" "external-secrets" "external-secrets/external-secrets" $ESO_NAMESPACE 
@@ -96,12 +100,12 @@ playground_up() {
     fi
 
 
-    # Propagate vault credentials for the namespaces - To be tested
+    # Propagate vault credentials for the namespaces 
+    propagate_secrets $ARGOCD_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
+    propagate_secrets $MONITORING_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
     propagate_secrets $ESO_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
     propagate_secrets $APPS_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
     propagate_secrets $INFRA_NAMESPACE "vault-creds" $VAULT_ROOT_TOKEN
-  
-
 
 		print_message "setting up external secrets"
 
