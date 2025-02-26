@@ -2,6 +2,7 @@
 This is a small Kubernetes playground to show how to deploy a simple application to a Kubernetes cluster. This will also show how to use Vault, External Secrets Operator (ESO) and ArgoCD to show how secrets management and GitOps can be used in a project.
 
 ## Pre-Requisites
+- Docker
 - Kubernetes
 - Helm
 - Kubectl
