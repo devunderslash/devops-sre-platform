@@ -16,7 +16,7 @@ Please ensure you have the following repository settings allowed to create a pac
 - Allow Actions to create and approve Pull Requests
 
 
-## Standard Operating for Observability Pipelines
+## Standard Operating for Grafana Observability Pipelines
 For the Observability pipelines the attempt here is to display a pipeline that takes inputs from the main workflow and then applies them based on product/region. For example if you were to use a Grafana instance that is in US-EAST-1 for product-1 and contains the prod and uat environments you may have a deployments directory that looks like this:
 ```
 deployments/
