@@ -11,4 +11,3 @@ base_bp = Blueprint('base', __name__)
 def health_check():
     logger.info("Health check")
     return jsonify({"message": "Healthy"}), 200
-
