@@ -3,12 +3,12 @@ FROM python:3.13-slim AS build
 
 WORKDIR /app
 
-COPY ../backend/requirements.txt .
+COPY backend/requirements.txt .
 
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY ../backend .
+COPY backend .
 COPY containerization/docker-entrypoint.sh .
 
 ENV SQLALCHEMY_DATABASE_URI="sqlite:///db.sqlite3"

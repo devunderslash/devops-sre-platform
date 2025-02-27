@@ -21,19 +21,23 @@ docker run -p 5001:5001 backend
 
 3. The application should be running on http://127.0.0.1:5001/
 
+
 ## Running with Docker Compose
 From the root of the repository, run the following command:
 ```bash
-docker-compose -f containerization/docker-compose.yml up
+docker compose -f containerization/docker-compose.yaml --env-file containerization/.env.local up
 ```
 
 The application should be running on http://127.0.0.1:5001/
 
 To bring down the containers, run:
 ```bash
-docker-compose -f containerization/docker-compose.yml down
+docker compose -f containerization/docker-compose.yaml --env-file containerization/.env.local down
 ```
 
-
-
+## Verify the application is running
+To verify that the application is running, visit 127.0.0.1:5001/api/health in your browser or run the following command:
+```bash
+curl -X GET 127.0.0.1:5001/api/health
+```
 
