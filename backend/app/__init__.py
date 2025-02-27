@@ -42,12 +42,13 @@ CORS(app)
 
 logger.info("Configuration loaded.")
 
-
+from routes.base_routes import base_bp
 from routes.player_routes import player_bp
 from routes.team_routes import team_bp
 from routes.session_routes import session_bp
 from routes.attendance_routes import attendance_bp
 
+app.register_blueprint(base_bp, url_prefix='/api')
 app.register_blueprint(player_bp, url_prefix='/api')
 app.register_blueprint(team_bp, url_prefix='/api')
 app.register_blueprint(session_bp, url_prefix='/api')
