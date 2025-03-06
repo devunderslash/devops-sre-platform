@@ -35,9 +35,16 @@ To bring down the containers, run:
 docker compose -f containerization/docker-compose.yaml --env-file containerization/.env.local down
 ```
 
+If you want to confirm the values that are being used in the environment variables, you can run the following command:
+```bash
+docker compose -f containerization/docker-compose.yaml --env-file containerization/.env.local convert
+# You can also use config to the same effect
+docker compose -f containerization/docker-compose.yaml --env-file containerization/.env.local config
+```
+
 ## Verify the application is running
 To verify that the application is running, visit 127.0.0.1:5001/api/health in your browser or run the following command:
 ```bash
-curl -X GET 127.0.0.1:5001/api/health
+curl -X GET 127.0.0.1:5001/api/v1/health
 ```
 
