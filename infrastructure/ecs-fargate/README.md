@@ -62,9 +62,9 @@ terraform destroy
 
 ## Test the application
 ```bash
-curl -X POST <load balancer output>/api/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
+curl -X POST <load balancer output>/api/v1/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
 
-curl -X GET <load balancer output>/api/players
+curl -X GET <load balancer output>/api/v1/players
 ```
 
 
