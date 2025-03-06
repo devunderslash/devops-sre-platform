@@ -150,11 +150,11 @@ kubectl -n apps get svc attendance-api
 
 The application can be used with some of the following commands:
 ```bash
-curl -X GET http://attendance-api.playground.io/api/players
+curl -X GET http://attendance-api.playground.io/api/v1/players
 ```
 To POST a new player, run the following command:
 ```bash
-curl -X POST http://attendance-api.playground.io/api/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
+curl -X POST http://attendance-api.playground.io/api//v1/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
 ```
 
 
