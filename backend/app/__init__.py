@@ -48,11 +48,11 @@ from routes.team_routes import team_bp
 from routes.session_routes import session_bp
 from routes.attendance_routes import attendance_bp
 
-app.register_blueprint(base_bp, url_prefix='/api')
-app.register_blueprint(player_bp, url_prefix='/api')
-app.register_blueprint(team_bp, url_prefix='/api')
-app.register_blueprint(session_bp, url_prefix='/api')
-app.register_blueprint(attendance_bp, url_prefix='/api')
+app.register_blueprint(base_bp, url_prefix='/api/v1')
+app.register_blueprint(player_bp, url_prefix='/api/v1')
+app.register_blueprint(team_bp, url_prefix='/api/v1')
+app.register_blueprint(session_bp, url_prefix='/api/v1')
+app.register_blueprint(attendance_bp, url_prefix='/api/v1')
 
 
 # if __name__ == "__main__":

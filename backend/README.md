@@ -75,7 +75,7 @@ bandit -c bandit.yaml -r .
 Get all players
 Sample curl request:
 ```bash
-curl -X GET http://127.0.0.1:5000/api/players
+curl -X GET http://127.0.0.1:5000/api/v1/players
 ```
 
 ### POST /api/players
@@ -83,7 +83,7 @@ curl -X GET http://127.0.0.1:5000/api/players
 Create a new player
 Sample curl request:
 ```bash
-curl -X POST http://127.0.0.1:5000/api/players \
+curl -X POST http://127.0.0.1:5000/api/v1/players \
 -H "Content-Type: application/json" \
 -d '{
   "id": 1,
@@ -98,7 +98,7 @@ curl -X POST http://127.0.0.1:5000/api/players \
 Get a player by ID
 Sample curl request:
 ```bash
-curl -X GET http://127.0.0.1:5000/api/players/1
+curl -X GET http://127.0.0.1:5000/api/v1/players/1
 ```
 
 ### PUT /api/players/<int:player_id>
