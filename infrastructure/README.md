@@ -71,3 +71,7 @@ Quick Info Articles on AWS:
 - [SQS and SNS](https://medium.com/awesome-cloud/aws-difference-between-sqs-and-sns-61a397bf76c5)
 - [Aurora and RDS](https://medium.com/awesome-cloud/aws-difference-between-amazon-aurora-and-amazon-rds-comparison-aws-aurora-vs-aws-rds-databases-60a69dbec41f)
 - [Parameter Store and Secrets Manager](https://medium.com/awesome-cloud/aws-difference-between-secrets-manager-and-parameter-store-systems-manager-f02686604eae)
+
+EKS:
+- [EKS Cluster](https://medium.com/@tech_18484/step-by-step-guide-creating-an-eks-cluster-with-terraform-resources-iam-roles-for-service-df1c5e389811)
+- [EKS Modules Github](https://github.com/terraform-aws-modules/terraform-aws-eks)

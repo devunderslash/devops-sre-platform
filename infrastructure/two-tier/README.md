@@ -1,0 +1,1 @@
+Apply the following here - https://achinthabandaranaike.medium.com/how-to-deploy-a-two-tier-architecture-in-aws-using-terraform-a4fd0f2e19ae
