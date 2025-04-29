@@ -61,8 +61,10 @@ jobs:
         echo "## Test Coverage Report Summary" >> $GITHUB_STEP_SUMMARY
         coverage report | grep TOTAL | awk '{print "| Stmts | Miss | Cover. |\n| ----- | ---- | ------ |\n| " $2 " | " $3 " | " $4 " |"}' >> $GITHUB_STEP_SUMMARY
 
-    # TODO:
-    # run Bandit, SAST, DAST, etc.
+    - name: Run SAST Bandit
+      run: |
+        bandit -c bandit.yaml -r .  
+
 
 
     # - name: Notify Slack

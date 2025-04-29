@@ -1,4 +1,5 @@
 # Multi stage distroless build with image size of 50MB
+# Switch to ubuntu for base to use bash - https://medium.com/@arjunp6713/multi-stage-docker-builds-7e47f592bf89
 
 # Stage 1: Build environment
 FROM python:3.11.2-slim AS builder
