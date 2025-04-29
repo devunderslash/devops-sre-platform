@@ -173,4 +173,8 @@ Vault commands with this solution as not accessible from the host machine. To ac
 - [Vault](https://www.vaultproject.io/)
 - [External Secrets Operator](https://external-secrets.io/latest/provider/kubernetes/)
 - [ESO Implementation](https://colinwilson.uk/2022/08/22/secrets-management-with-external-secrets-argo-cd-and-gitops/)
+- [Config file Management](https://www.geeksforgeeks.org/kubernetes-injecting-configmap-as-files/)
+
+## TODO
+- Add kubestack - https://grimoire.carcano.ch/blog/kubernetes-prometheus-and-grafana-with-kube-prometheus-stack/
 

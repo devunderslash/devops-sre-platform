@@ -7,7 +7,7 @@ set -euo pipefail
 ARGOCD_NAMESPACE="argocd"
 INFRA_NAMESPACE="infra"
 VAULT_NAMESPACE="vault"
-VSO_NAMESPACE="vault-secrets"
+# VSO_NAMESPACE="vault-secrets"
 ESO_NAMESPACE="external-secrets"
 APPS_NAMESPACE="apps"
 MONITORING_NAMESPACE="kube-prometheus-stack"
@@ -73,7 +73,7 @@ playground_up() {
     helm_install "hashicorp" "https://helm.releases.hashicorp.com" "vault"  "hashicorp/vault" $VAULT_NAMESPACE
 
     # Install Vault Secrets Operator
-    helm_install "hashicorp" "https://helm.releases.hashicorp.com" "vault-secrets-operator"  "hashicorp/vault-secrets-operator" $VSO_NAMESPACE
+    # helm_install "hashicorp" "https://helm.releases.hashicorp.com" "vault-secrets-operator"  "hashicorp/vault-secrets-operator" $VSO_NAMESPACE
 
     # Vault Operations
     # wait
