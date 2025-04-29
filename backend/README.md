@@ -102,3 +102,20 @@ curl -X GET http://127.0.0.1:5000/api/v1/players/1
 ```
 
 ### PUT /api/players/<int:player_id>
+
+
+
+## TODO
+
+- Further abstract the DB transactions on the base repository - https://ryan-zheng.medium.com/simplifying-database-interactions-in-python-with-the-repository-pattern-and-sqlalchemy-22baecae8d84
+
+- Simplify db and session bind behaviour - https://medium.com/analytics-vidhya/under-the-hood-of-flask-sqlalchemy-793f7b3f11c3
+
+- Good Flask Resource - https://www.digitalocean.com/community/tutorials/how-to-structure-a-large-flask-application-with-flask-blueprints-and-flask-sqlalchemy#prerequisites
+
+- Test DB transactions - https://stackoverflow.com/questions/17791571/how-can-i-test-a-flask-application-which-uses-sqlalchemy
+
+Secure input code with semgrep and escape - https://michaelhidalgo.medium.com/on-flask-semgrep-and-secure-coding-26290fcdd960
+
+## Resources
+- [DB Imperative mapping](https://medium.com/better-programming/the-database-is-not-the-most-important-part-b87d8af01959)

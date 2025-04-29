@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, escape
 from app import db
 from dataclasses import asdict
 import logging
@@ -69,6 +69,7 @@ def get_player(id):
     if player:
         return jsonify(asdict(player)), 200
     return jsonify({"error": "Player not found"}), 404
+
 
 @player_bp.route('/players/<string:name>', methods=['GET'])
 def get_player_by_name(name):

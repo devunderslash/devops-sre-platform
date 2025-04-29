@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        " name": " John Doe",
+        " age": " 30",
+        " occupation": " Software Engineer"
+    },
+    {
+        "id": "2",
+        " name": " Jane Doe",
+        " age": " 25",
+        " occupation": " Data Scientist"
+    },
+    {
+        "id": "3",
+        " name": " John Smith",
+        " age": " 35",
+        " occupation": " Product Manager"
+    },
+    {
+        "id": "4",
+        " name": " Jane Smith",
+        " age": " 40",
+        " occupation": " Designer"
+    }
+]
