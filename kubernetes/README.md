@@ -59,6 +59,9 @@ minikube addons enable metrics-server
 echo "127.0.0.1 argocd.playground.io" | sudo tee -a /etc/hosts
 # Also add any application that you want to access from the host machine, eg:
 echo "127.0.0.1 attendance-api.playground.io" | sudo tee -a /etc/hosts
+# And Monitoring
+echo "127.0.0.1 grafana.playground.io" | sudo tee -a /etc/hosts
+echo "127.0.0.1 prometheus.playground.io" | sudo tee -a /etc/hosts
 ```
 
 - To deploy argoCD, infrastructure and apps, run the following commands:
@@ -168,6 +171,17 @@ To POST a new player, run the following command:
 ```bash
 curl -X POST http://attendance-api.playground.io/api/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
 ```
+
+### Observability & Monitoring
+The playground comes with a simple observability and monitoring setup using Prometheus and Grafana. The setup is deployed using the kube-prometheus-stack helm chart. The setup is deployed to the monitoring namespace and can be accessed in the following UIs:
+- Prometheus: http://prometheus.playground.io
+- Grafana: http://grafana.playground.io
+To access the Grafana UI, you can use the following command to get the admin password:
+```bash
+kubectl -n kube-prometheus-stack get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode 
+```
+Then login to the Grafana UI using the username `admin` and the password retrieved above.  
+
 
 
 ### Common Issues
