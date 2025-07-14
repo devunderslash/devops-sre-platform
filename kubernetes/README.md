@@ -48,11 +48,23 @@ argocd login --core
 kubectl config set-context --current --namespace=argocd
 ```
 
+- Install addons
+```bash
+minikube addons enable ingress
+minikube addons enable ingress-dns
+minikube addons enable metrics-server
+
 - Add ArgoCD UI ip to etc/hosts. You can do this for any application that you want to access from the host machine and you have provided and ingress or a load balancer manifest.
 ```bash
 echo "127.0.0.1 argocd.playground.io" | sudo tee -a /etc/hosts
 # Also add any application that you want to access from the host machine, eg:
 echo "127.0.0.1 attendance-api.playground.io" | sudo tee -a /etc/hosts
+```
+
+- To deploy argoCD, infrastructure and apps, run the following commands:
+
+```bash
+kubectl apply -f config/
 ```
 
 - Run minikube tunnel
@@ -103,11 +115,6 @@ There are two ways of doing this:
 
 This playground uses the ArgoCD ApplicationSet resource to manage the applications and an ArgoCD Application resource to manage the infrastructure such as databases and caches.
 
-To deploy the infrastructure and apps, run the following commands:
-
-```bash
-kubectl apply -f config/
-```
 
 ## Vault
 Vault is a tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, or certificates.
@@ -148,13 +155,18 @@ The application is deployed when the ArgoCD playground_appset_list.yaml is appli
 kubectl -n apps get svc attendance-api
 ```
 
+If not deployed yet, you can deploy the application using the following command:
+```bash
+kubectl apply -k apps-deployment-repo/apps/attendance-api/overlay/region1-dev -n apps
+```
+
 The application can be used with some of the following commands:
 ```bash
-curl -X GET http://attendance-api.playground.io/api/v1/players
+curl -X GET http://attendance-api.playground.io/api/players
 ```
 To POST a new player, run the following command:
 ```bash
-curl -X POST http://attendance-api.playground.io/api//v1/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
+curl -X POST http://attendance-api.playground.io/api/players -d '{"id": "1", "name": "John Doe", "dob": "2000-05-15", "joined_group_date": "2023-01-06"}' -H "Content-Type: application/json"
 ```
 
 
@@ -177,4 +189,6 @@ Vault commands with this solution as not accessible from the host machine. To ac
 
 ## TODO
 - Add kubestack - https://grimoire.carcano.ch/blog/kubernetes-prometheus-and-grafana-with-kube-prometheus-stack/
+- Need to abstract argoCD Redis password and use vault to manage it
+- Need to abstract the Postgres password and use vault to manage it
 
