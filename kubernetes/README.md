@@ -178,7 +178,7 @@ The playground comes with a simple observability and monitoring setup using Prom
 - Grafana: http://grafana.playground.io
 To access the Grafana UI, you can use the following command to get the admin password:
 ```bash
-kubectl -n kube-prometheus-stack get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode 
+kubectl -n monitoring get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode 
 ```
 Then login to the Grafana UI using the username `admin` and the password retrieved above.  
 

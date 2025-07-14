@@ -10,7 +10,7 @@ VAULT_NAMESPACE="vault"
 # VSO_NAMESPACE="vault-secrets"
 ESO_NAMESPACE="external-secrets"
 APPS_NAMESPACE="apps"
-MONITORING_NAMESPACE="kube-prometheus-stack"
+MONITORING_NAMESPACE="monitoring"
 
 # main method
 main() {
@@ -72,6 +72,36 @@ playground_up() {
     # Install Vault
     helm_install "hashicorp" "https://helm.releases.hashicorp.com" "vault"  "hashicorp/vault" $VAULT_NAMESPACE
 
+    #  Install stormforge agent
+    print_message "Installing StormForge Agent"
+    # check if stormforge-agent is already installed
+    if helm list -n stormforge-system | grep -q stormforge-agent; then
+        print_message "StormForge Agent is already installed."
+    else
+        print_message "Installing StormForge Agent in stormforge-system namespace"
+        kubectl create namespace stormforge-system >/dev/null || true
+
+            # Install StormForge Agent
+        print_message "Installing StormForge Agent in stormforge-system namespace"
+        # Note: Replace the clientID and clientSecret with your own values
+        # You can get these values from the StormForge Console
+        # https://console.stormforge.io/console/agents
+        # Note: The clientSecret is a secret, so it should not be shared publicly
+        helm install stormforge-agent oci://registry.stormforge.io/library/stormforge-agent \
+          --create-namespace --namespace stormforge-system \
+          --set clusterName="minikube" \
+          --set authorization.clientID="id" \
+          --set authorization.clientSecret=".secret"
+        print_message "StormForge Agent installed in stormforge-system namespace"
+        # wait for stormforge-agent pod
+        wait_for_pod "stormforge-system" "stormforge-agent-0"
+        # wait for stormforge-agent deployment
+        kubectl -n stormforge-system rollout status deployment stormforge-agent --timeout=120s
+        print_message "StormForge Agent is running"
+    fi
+
+
+
     # Install Vault Secrets Operator
     # helm_install "hashicorp" "https://helm.releases.hashicorp.com" "vault-secrets-operator"  "hashicorp/vault-secrets-operator" $VSO_NAMESPACE
 
@@ -115,6 +145,15 @@ playground_up() {
 
 		# wait for es webhook deployment
     kubectl -n $ESO_NAMESPACE rollout status deployment external-secrets-webhook --timeout=120s
+    print_message "External Secrets Operator is running"
+
+    # Install External Secrets Operator CRDs
+    if kubectl get crd clustersecretstores.external-secrets.io >/dev/null 2>&1; then
+        print_message "External Secrets Operator CRDs already installed"
+    else
+        print_message "Installing External Secrets Operator CRDs"
+        kubectl apply -f https://raw.githubusercontent.com/external-secrets/external-secrets/main/deploy/crds/bundle.yaml
+    fi
 
     # Create ClusterSecretStore & ExternalSecret
     kubectl -n $ESO_NAMESPACE apply -f eso    
@@ -152,14 +191,14 @@ assert_docker_is_running() {
   fi
 }
 
-# Start Minikube 
+# Start Minikube with containerd runtime
 start_minikube() {
     if minikube status | grep -q "Running"; then
         print_message "Minikube is running."
     else
         print_message "Minikube is not running."
         print_message "Starting Minikube"
-        minikube start --interactive=False > /dev/null
+        minikube start --container-runtime=containerd --interactive=False > /dev/null
         minikube addons enable ingress > /dev/null
     fi
 }
@@ -367,7 +406,7 @@ propagate_secrets() {
 
 playground_down() {
     # Delete the namespaces
-    namespaces=($ARGOCD_NAMESPACE $INFRA_NAMESPACE $APPS_NAMESPACE, $VAULT_NAMESPACE, $ESO_NAMESPACE, $VSO_NAMESPACE)
+    namespaces=($ARGOCD_NAMESPACE $INFRA_NAMESPACE $APPS_NAMESPACE, $VAULT_NAMESPACE, $ESO_NAMESPACE)
     for ns in "${namespaces[@]}"; do
         delete_namespace $ns
     done
